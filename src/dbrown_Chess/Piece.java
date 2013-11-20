@@ -11,12 +11,21 @@ public class Piece {
 
 
 public Piece(String pieceType, String pieceColor, String pieceTypeCode, String pieceColorCode) {
-		this.pieceColor = pieceColor;
 		this.pieceType = pieceType;
+		this.pieceColor = pieceColor;
 		this.pieceTypeCode = pieceTypeCode;
 		this.pieceColorCode = pieceColorCode;
 	}
+public Piece(String pieceTypeCode, String pieceColorCode){
+	this.pieceTypeCode = pieceTypeCode;
+	this.pieceColorCode = pieceColorCode;
+}
 
+//public void move(Board theboard){
+//
+//	Command comand = Command
+//	theboard.placePiece(Command.getDestinColumn(), command.getDestinRow() , piece);
+//}
 
 public String getPieceColor() {
 	return pieceColor;

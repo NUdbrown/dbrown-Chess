@@ -9,6 +9,8 @@ public class Command {
 	private String possiblePieceCode;
 	private String possibleColorCode;
 	CommandType typeCommand;
+	private String destinationSquare2;
+	private String pieceSquare2;
 	
 	
 	public enum CommandType {
@@ -32,13 +34,8 @@ public class Command {
 		this.pieceSquare = pieceSquare;
 		this.destinationSquare = destinationSquare;
 		this.typeCommand = typeCommand;
-		
-		
 	}
-	
-	
-	
-	
+		
 	public String getPiece() {
 		return possiblePiece;
 	}
@@ -58,7 +55,14 @@ public class Command {
 		return destinationSquare;
 	}
 
-
+	public char getDestinColumn(){
+		char destincol = destinationSquare.charAt(0);
+		return destincol;
+	}
+	public char getDestinRow(){
+		char destinRow = destinationSquare.charAt(1);
+		return destinRow;
+	}
 
 	public void setDestinationSquare(String destinationSquare) {
 		this.destinationSquare = destinationSquare;

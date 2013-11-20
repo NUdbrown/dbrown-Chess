@@ -27,38 +27,40 @@ public class UserControls {
 			 buff = Files.newBufferedReader(filePath, Charset.defaultCharset());
 			while(buff.ready()) {
 				move = buff.readLine();
-				
 				Command command = parser.parseCommand(move);
+				Piece piece = null;
+				String pieceType = command.getPiece();
+				String pieceColor = command.getPossiblePieceColor();
+				String pieceCode = command.getPossiblePieceCode();
+				String colorCode = command.getPossibleColorCode();
 			
 				switch(command.typeCommand)
 				{
 				case PLACEMENT:
-					Piece piece = null;
-					if(command.getPiece().equals("Pawn")) {
-						piece = new Pawn(command.getPiece(), command.getPossiblePieceColor(), command.getPossiblePieceCode(),command.getPossibleColorCode() );
+					if(pieceType.equals("Pawn")) {
+						piece = new Pawn(pieceType, pieceColor, pieceCode,colorCode );
 						
 					}
-					else if(command.getPiece().equals("King")) {
-						piece = new King(command.getPiece(), command.getPossiblePieceColor(), command.getPossiblePieceCode(),command.getPossibleColorCode());
+					else if(pieceType.equals("King")) {
+						piece = new King(pieceType, pieceColor, pieceCode,colorCode);
 					}
-					else if(command.getPiece().equals("Queen")) {
-						piece = new Queen(command.getPiece(), command.getPossiblePieceColor(), command.getPossiblePieceCode(),command.getPossibleColorCode());
+					else if(pieceType.equals("Queen")) {
+						piece = new Queen(pieceType, pieceColor,pieceCode,colorCode);
 					}
-					else if(command.getPiece().equals("Rook")) {
-						piece = new Rook(command.getPiece(), command.getPossiblePieceColor(), command.getPossiblePieceCode(),command.getPossibleColorCode());
+					else if(pieceType.equals("Rook")) {
+						piece = new Rook(pieceType, pieceColor, pieceCode,colorCode);
 					}
-					else if(command.getPiece().equals("Knight")) {
-						piece = new Knight(command.getPiece(), command.getPossiblePieceColor(), command.getPossiblePieceCode(),command.getPossibleColorCode());
+					else if(pieceType.equals("Knight")) {
+						piece = new Knight(pieceType, pieceColor, pieceCode,colorCode);
 					}
-					else if(command.getPiece().equals("Bishop")) {
-						piece = new Bishop(command.getPiece(), command.getPossiblePieceColor(), command.getPossiblePieceCode(),command.getPossibleColorCode());
+					else if(pieceType.equals("Bishop")) {
+						piece = new Bishop(pieceType, pieceColor, pieceCode,colorCode);
 					}
-					theBoard.chessPieces.put(command.getDestinationSquare() , piece);
+					theBoard.placePiece(command.getDestinColumn(), command.getDestinRow() , piece);
 					theBoard.print();
 					break;
 				case MOVE:
 					//add a board and move the chess pieces
-//					Piece p = theBoard.getChessBoard().get(command.getPieceSquare());
 					theBoard.init();
 					
 					break;
