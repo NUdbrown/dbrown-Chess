@@ -22,9 +22,6 @@ public class BoardSquare {
 				
 	}
 	
-	public void setPiece()
-	{
-	}
 	
 	public String getColor()
 	{

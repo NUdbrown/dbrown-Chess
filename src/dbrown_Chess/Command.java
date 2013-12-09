@@ -9,8 +9,6 @@ public class Command {
 	private String possiblePieceCode;
 	private String possibleColorCode;
 	CommandType typeCommand;
-	private String destinationSquare2;
-	private String pieceSquare2;
 	
 	
 	public enum CommandType {
@@ -19,21 +17,24 @@ public class Command {
 	
 	
 	
-	public Command(String piece, String pieceColor, String destinationSquare,String possiblePieceCode,String possibleColorCode, CommandType typeCommand)
+	public Command(String piece, String pieceColor, String destinationSquare,String pieceSquare,String possiblePieceCode,String possibleColorCode, CommandType typeCommand)
 	{
 		
 		this.possiblePiece = piece;
 		this.destinationSquare = destinationSquare;
+		this.pieceSquare = pieceSquare;
 		this.typeCommand = typeCommand;
 		this.possiblePieceCode = possiblePieceCode;
 		this.possibleColorCode = possibleColorCode;
 	}
 	
+	public CommandType getTypeCommand() {
+		return typeCommand;
+	}
+
 	public Command(String pieceSquare, String destinationSquare, CommandType typeCommand)
 	{
-		this.pieceSquare = pieceSquare;
-		this.destinationSquare = destinationSquare;
-		this.typeCommand = typeCommand;
+		this(null,null, destinationSquare, pieceSquare, null, null, typeCommand);
 	}
 		
 	public String getPiece() {
@@ -45,9 +46,9 @@ public class Command {
 	public String getPieceSquare() {
 		return pieceSquare;
 	}
-	public void setPieceSquare(String pieceSquare) {
-		this.pieceSquare = pieceSquare;
-	}
+//	public void setPieceSquare(String pieceSquare) {
+//		this.pieceSquare = pieceSquare;
+//	}
 
 
 
@@ -59,9 +60,28 @@ public class Command {
 		char destincol = destinationSquare.charAt(0);
 		return destincol;
 	}
+	@Override
+	public String toString() {
+		return "Command [pieceSquare=" + pieceSquare + ", destinationSquare="
+				+ destinationSquare + ", possiblePiece=" + possiblePiece
+				+ ", possiblePieceColor=" + possiblePieceColor
+				+ ", possiblePieceCode=" + possiblePieceCode
+				+ ", possibleColorCode=" + possibleColorCode + ", typeCommand="
+				+ typeCommand + "]";
+	}
+
 	public char getDestinRow(){
 		char destinRow = destinationSquare.charAt(1);
 		return destinRow;
+	}
+	
+	public char getSourceColumn(){
+		char sourceCol = pieceSquare.charAt(0);
+		return sourceCol;
+	}
+	public char getSourceRow(){
+		char sourceRow = pieceSquare.charAt(1);
+		return sourceRow;
 	}
 
 	public void setDestinationSquare(String destinationSquare) {

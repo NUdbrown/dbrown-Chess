@@ -1,6 +1,8 @@
 package dbrown_Chess;
 
-public class Piece {
+import java.util.ArrayList;
+
+public abstract class Piece {
 	
 	
 	private String pieceType;
@@ -21,11 +23,18 @@ public Piece(String pieceTypeCode, String pieceColorCode){
 	this.pieceColorCode = pieceColorCode;
 }
 
-//public void move(Board theboard){
-//
-//	Command comand = Command
-//	theboard.placePiece(Command.getDestinColumn(), command.getDestinRow() , piece);
-//}
+public boolean isValidMove(Move theMove, Board theBoard){
+	ArrayList<Position> listOfMoves = getMoves(theMove.getSource(), theBoard);
+	for( Position p: listOfMoves ){
+		if(p.equals(theMove.getDestination())){
+			return true;
+		}
+	}
+	return false;
+	
+}
+
+public abstract ArrayList<Position> getMoves(Position thePosition, Board theBoard); 
 
 public String getPieceColor() {
 	return pieceColor;

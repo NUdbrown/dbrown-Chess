@@ -23,11 +23,11 @@ public class Board {
 		return boardNumber;
 	}
 	
-	public int getColumn(char letter) {
+	public static int getColumn(char letter) {
 		return (int) (letter - 'a');
 	}
 	
-	public int getRow(char letter) {
+	public static int getRow(char letter) {
 		return BOARD_SIZE - (letter - '0');
 	}
 	
@@ -43,12 +43,34 @@ public class Board {
 
 	}
 	
-	public void placePiece(char col, char row, Piece thePiece)
+	public void placePiece(char row, char col, Piece thePiece)
 	{
 		BOARD[getRow(row)][getColumn(col)] = thePiece;
 	}
 	
-
+	
+	public void makeMove(Move theMove){
+		Piece thePiece = BOARD[theMove.getSource().getRow()][theMove.getSource().getCol()];
+		if(thePiece.isValidMove(theMove, this)){
+			BOARD[theMove.getSource().getRow()][theMove.getSource().getCol()] = null;
+			BOARD[theMove.getDestination().getRow()][theMove.getDestination().getCol()] = thePiece;
+		}
+		
+	}
+	
+	public Piece getPiece(Position thePosition){
+		return BOARD[thePosition.getRow()][thePosition.getCol()];	
+	}
+	
+	public boolean hasPiece(Position thePosition) {
+		return getPiece(thePosition) != null;
+	}
+	
+	public void removePiece(Piece thePiece, Position thePosition){
+		thePiece = BOARD[thePosition.getRow()][thePosition.getCol()];
+		Piece temp = thePiece;
+		temp = null;		
+	}
 	public void print() {
 
 		for (int letters = 0; letters < BOARD_SIZE; letters++) {

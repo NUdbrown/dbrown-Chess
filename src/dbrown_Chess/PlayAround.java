@@ -14,6 +14,7 @@ public class PlayAround {
 		init();
 		placePiece('c','5', new Bishop("Bishop", "Light", "b", "l"));
 		print();
+		getPiece();
 
 	}
 	
@@ -53,6 +54,10 @@ public class PlayAround {
 		int r = getRow(row);
 		System.out.println(c+ ","+r);
 		BOARD[getColumn(col)][getRow(row)] = thePiece;
+	}
+	
+	public static void getPiece(){
+		
 	}
 	
 
