@@ -32,16 +32,13 @@ public class UserControls {
 					Command command = parser.parseCommand(line);
 					if(command.getTypeCommand().equals(CommandType.PLACEMENT)){
 						CommandParser.chooseCommand(command, theBoard);
-						System.out.println("Command Type: "+command.toString());
 					}
 					else if(command.getTypeCommand().equals(CommandType.MOVE)){
 						CommandParser.chooseCommand(command, theBoard);
 						Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
 						Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
 						Move theMove = new Move(source, destination);
-						//theBoard.removePiece(theBoard.getPiece(source),source);
 						theBoard.makeMove(theMove);
-						System.out.println("Command Type: "+command.toString());
 					}
 				
 			} while (buff.ready());

@@ -30,6 +30,7 @@ public boolean isValidMove(Move theMove, Board theBoard){
 			return true;
 		}
 	}
+	System.out.println("Invalid Move");
 	return false;
 	
 }

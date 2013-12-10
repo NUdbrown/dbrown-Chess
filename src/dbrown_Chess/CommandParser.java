@@ -137,12 +137,13 @@ public class CommandParser {
 			
 			break;
 		case MOVE:
-			Move theMove = new Move(new Position(command.getSourceRow(), command.getSourceColumn()), new Position(command.getDestinRow(), command.getDestinColumn()));
-			Piece thePiece = theBoard.getPiece(theMove.getSource());
-			if(thePiece.isValidMove(theMove, theBoard)){
-				theBoard.makeMove(theMove);
-				theBoard.print();
-			}
+//			Move theMove = new Move(new Position(command.getSourceRow(), command.getSourceColumn()), new Position(command.getDestinRow(), command.getDestinColumn()));
+//			Piece thePiece = theBoard.getPiece(theMove.getSource());
+//			if(thePiece.isValidMove(theMove, theBoard)){
+//				theBoard.makeMove(theMove);
+//				theBoard.print();
+//			}
+//			
 			break;
 		case DOUBLE_MOVE:
 			

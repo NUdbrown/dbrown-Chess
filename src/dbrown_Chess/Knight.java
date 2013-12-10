@@ -30,11 +30,10 @@ public class Knight extends Piece {
 			ArrayList<Position> validMoves) {
 		if(row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH){
 			Position newPosition = new Position(row, col);
-			if(theBoard.hasPiece(newPosition)){
+			if(!theBoard.hasPiece(newPosition)){
 				validMoves.add(newPosition);
 			}
 		}
 	}
-
 
 }

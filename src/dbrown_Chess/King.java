@@ -18,14 +18,15 @@ public class King extends Piece{
 	public ArrayList<Position> getMoves(Position thePosition, Board theBoard) {
 		ArrayList<Position> validMoves = new ArrayList<Position>();
 	    
-		addUnoccupiedPosition(thePosition.getRow()-1, thePosition.getCol(), theBoard, validMoves);
-		addUnoccupiedPosition(thePosition.getRow(), thePosition.getCol()-1, theBoard, validMoves);
-		addUnoccupiedPosition(thePosition.getRow()-1, thePosition.getCol()-1, theBoard, validMoves);
-		addUnoccupiedPosition(thePosition.getRow()+1, thePosition.getCol(), theBoard, validMoves);
-		addUnoccupiedPosition(thePosition.getRow(), thePosition.getCol()+1, theBoard, validMoves);
-		addUnoccupiedPosition(thePosition.getRow()+1, thePosition.getCol()+1, theBoard, validMoves);		
-		addUnoccupiedPosition(thePosition.getRow()-1, thePosition.getCol()+1, theBoard, validMoves);
-		addUnoccupiedPosition(thePosition.getRow()+1, thePosition.getCol()-1, theBoard, validMoves);
+		addUnoccupiedPosition(thePosition.getRow()+1, thePosition.getCol(), theBoard, validMoves); 
+		addUnoccupiedPosition(thePosition.getRow()-1, thePosition.getCol(), theBoard, validMoves); 
+		addUnoccupiedPosition(thePosition.getRow(), thePosition.getCol()+1, theBoard, validMoves); 
+		addUnoccupiedPosition(thePosition.getRow(), thePosition.getCol()-1, theBoard, validMoves); 
+		addUnoccupiedPosition(thePosition.getRow()-1, thePosition.getCol()+1, theBoard, validMoves); 
+		addUnoccupiedPosition(thePosition.getRow()-1, thePosition.getCol()-1, theBoard, validMoves); 
+		addUnoccupiedPosition(thePosition.getRow()+1, thePosition.getCol()-1, theBoard, validMoves); 
+		addUnoccupiedPosition(thePosition.getRow()+1, thePosition.getCol()+1, theBoard, validMoves); 
+		
 		return validMoves;
 	}
 
@@ -33,7 +34,7 @@ public class King extends Piece{
 			ArrayList<Position> validMoves) {
 		if(row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH){
 			Position newPosition = new Position(row, col);
-			if(theBoard.hasPiece(newPosition)){
+			if(!theBoard.hasPiece(newPosition)){
 				validMoves.add(newPosition);
 			}
 		}
