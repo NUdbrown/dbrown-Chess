@@ -27,6 +27,7 @@ public class Rook extends Piece{
 		return validMoves;
 	}
 	
+	//Move this method into the piece class
 	private void addUnoccupiedPosition(int row, int col, Board theBoard,
 			ArrayList<Position> validMoves) {
 		if(row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH){

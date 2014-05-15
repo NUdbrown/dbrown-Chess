@@ -38,7 +38,8 @@ public class UserControls {
 						Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
 						Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
 						Move theMove = new Move(source, destination);
-						theBoard.makeMove(theMove);
+						theBoard.turnTaking(theMove);
+						//theBoard.makeMove(theMove);
 					}
 				
 			} while (buff.ready());

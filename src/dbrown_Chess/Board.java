@@ -71,6 +71,42 @@ public class Board {
 		Piece temp = thePiece;
 		temp = null;		
 	}
+	
+	
+	boolean isLightTurn = true;	
+	
+	public void turnTaking(Move theMove){
+		Piece currentPiece = getPiece(theMove.getSource());
+		
+		if(isLightTurn){
+			if(currentPiece.getPieceColorCode().equals("l")){
+				makeMove(theMove);
+			}
+			
+			isLightTurn = !isLightTurn;
+						
+		}
+		else{
+			System.out.println("Not your turn!");
+		}
+		
+		if(!isLightTurn){
+			if(currentPiece.getPieceColorCode().equals("d")){
+				makeMove(theMove);
+			}
+			
+			isLightTurn = true;
+		}
+		else{
+			System.out.println("Not your turn!");
+		}
+		
+		  
+		  
+		 
+	}
+	
+	
 	public void print() {
 
 		for (int letters = 0; letters < BOARD_SIZE; letters++) {
