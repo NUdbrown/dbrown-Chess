@@ -33,3 +33,5 @@ plh2
 d2d4
 e7e5
 d7d6
+a2a4
+b2b4

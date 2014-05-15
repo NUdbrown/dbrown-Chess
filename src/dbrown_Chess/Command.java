@@ -21,6 +21,7 @@ public class Command {
 	{
 		
 		this.possiblePiece = piece;
+		this.possiblePieceColor = pieceColor;
 		this.destinationSquare = destinationSquare;
 		this.pieceSquare = pieceSquare;
 		this.typeCommand = typeCommand;

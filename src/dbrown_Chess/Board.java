@@ -4,6 +4,7 @@ public class Board {
 
 	private static final int BOARD_SIZE = 8;
 	private Piece [][] BOARD;
+	private boolean isLightTurn = true;
 
 	public Board() {
 		BOARD = new Piece[BOARD_SIZE][BOARD_SIZE];
@@ -13,7 +14,7 @@ public class Board {
 	
 	public String boardLetter(int letter)
 	{
-		String boardLetter= (char)((int) 'a' + letter) + "";
+		String boardLetter= (char)('a' + letter) + "";
 		return boardLetter;
 	}
 	
@@ -24,7 +25,7 @@ public class Board {
 	}
 	
 	public static int getColumn(char letter) {
-		return (int) (letter - 'a');
+		return letter - 'a';
 	}
 	
 	public static int getRow(char letter) {
@@ -73,44 +74,40 @@ public class Board {
 	}
 	
 	
-	boolean isLightTurn = true;	
-	
-	public void turnTaking(Move theMove){
-		Piece currentPiece = getPiece(theMove.getSource());
-		
-		if(isLightTurn){
-			if(currentPiece.getPieceColorCode().equals("l")){
+
+
+	public void turnTaking(Move theMove) {
+		Piece pieceToMove = getPiece(theMove.getSource());
+
+		if (isLightTurn) {
+			if (pieceToMove.getPieceColor().equals("light")) {
 				makeMove(theMove);
-			}
-			
-			isLightTurn = !isLightTurn;
-						
+				isLightTurn = false;
+
+			} else {
+				System.out.println("It is not your turn!");
+			}	
+
 		}
-		else{
-			System.out.println("Not your turn!");
-		}
-		
-		if(!isLightTurn){
-			if(currentPiece.getPieceColorCode().equals("d")){
+
+		else {
+			if (pieceToMove.getPieceColor().equals("dark")) {
 				makeMove(theMove);
+				isLightTurn = true;
+
+			} else {
+				System.out.println("It is not your turn!");
 			}
-			
-			isLightTurn = true;
+
 		}
-		else{
-			System.out.println("Not your turn!");
-		}
-		
-		  
-		  
-		 
+
 	}
 	
 	
 	public void print() {
 
 		for (int letters = 0; letters < BOARD_SIZE; letters++) {
-			System.out.print("   " + (char) ((int) 'b' + letters - 1) + " ");
+			System.out.print("   " + (char) ('b' + letters - 1) + " ");
 		}
 		System.out.println();
 		for (int x = 0; x < BOARD_SIZE; x++) {
