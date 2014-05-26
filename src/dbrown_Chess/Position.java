@@ -48,11 +48,5 @@ public class Position {
 		this.col = theCol - 'a';		
 	}
 	
-//	public static void main (String[]args){
-//		Position pos = new Position('1','a');
-//		System.out.println("Row : "+ pos.getRow() + "\nCol: " + pos.getCol()) ;
-//		Position pos1 = new Position('8','h');
-//		System.out.println("Row : "+ pos1.getRow() + "\nCol: " + pos1.getCol()) ;
-//	}
 	
 }

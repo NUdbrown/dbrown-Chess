@@ -11,7 +11,6 @@ public class Queen extends Piece {
 		super(pieceType, pieceColor, pieceTypeCode, pieceColorCode);
 	}
 
-	//Correct Queen Movement below
 	@Override
 	public ArrayList<Position> getMoves(Position thePosition, Board theBoard) {
 		ArrayList<Position> validMoves = new ArrayList<Position>();

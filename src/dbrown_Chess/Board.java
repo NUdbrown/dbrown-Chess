@@ -52,11 +52,13 @@ public class Board {
 	
 	public void makeMove(Move theMove){
 		Piece thePiece = BOARD[theMove.getSource().getRow()][theMove.getSource().getCol()];
-		if(thePiece.isValidMove(theMove, this)){
-			BOARD[theMove.getSource().getRow()][theMove.getSource().getCol()] = null;
-			BOARD[theMove.getDestination().getRow()][theMove.getDestination().getCol()] = thePiece;
-		}
-		
+		if(thePiece != null){
+			if(thePiece.isValidMove(theMove, this)){
+				BOARD[theMove.getSource().getRow()][theMove.getSource().getCol()] = null;
+				BOARD[theMove.getDestination().getRow()][theMove.getDestination().getCol()] = thePiece;
+			}
+		}		
+
 	}
 	
 	public Piece getPiece(Position thePosition){
@@ -72,8 +74,6 @@ public class Board {
 		Piece temp = thePiece;
 		temp = null;		
 	}
-	
-	
 
 
 	public void turnTaking(Move theMove) {
@@ -117,10 +117,10 @@ public class Board {
 				Piece piece = BOARD[x][y];
 				if(piece == null)
 				{
-					System.out.print("[" + "--" + "] ");
+					System.out.print("[" + "__" + "] ");
 				}
 				else
-				System.out.print("[" + piece.getPieceColorCode() + piece.getPieceTypeCode() + "] ");
+				System.out.print("[" + piece.getPieceColorCode().toUpperCase() + piece.getPieceTypeCode().toUpperCase() + "] ");
 
 			}
 			System.out.println();

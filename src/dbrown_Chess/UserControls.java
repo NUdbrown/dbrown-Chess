@@ -23,25 +23,23 @@ public class UserControls {
 
 	public void readCommandsFromFile(Path filePath) throws IOException {
 		try {
-			
 			CommandParser parser = new CommandParser();
 			buff = Files.newBufferedReader(filePath, Charset.defaultCharset());
-			Board theBoard = new Board();
+			//Board theBoard = new Board();
 			do {
 				String line = buff.readLine();
 					Command command = parser.parseCommand(line);
 					if(command.getTypeCommand().equals(CommandType.PLACEMENT)){
-						CommandParser.chooseCommand(command, theBoard);
+						placePiece(command);
 					}
 					else if(command.getTypeCommand().equals(CommandType.MOVE)){
-						CommandParser.chooseCommand(command, theBoard);
-						Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
-						Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
-						Move theMove = new Move(source, destination);
-						theBoard.turnTaking(theMove);
-						//theBoard.makeMove(theMove);
+						makeMove(command);
 					}
-				
+					else if(command.getTypeCommand().equals(CommandType.CAPTURE)){
+						capturing(command);
+					}
+					
+					
 			} while (buff.ready());
 			theBoard.print();
 
@@ -52,6 +50,51 @@ public class UserControls {
 		} finally {
 			buff.close();
 		}
+	}
+	
+	private void placePiece(Command command){
+		Piece piece = null;
+		String pieceType = command.getPiece();
+		String pieceColor = command.getPossiblePieceColor();
+		String pieceCode = command.getPossiblePieceCode();
+		String colorCode = command.getPossibleColorCode();
+	
+
+			if(pieceType.equals("Pawn")) {
+				piece = new Pawn(pieceType, pieceColor, pieceCode,colorCode );
+				
+			}
+			else if(pieceType.equals("King")) {
+				piece = new King(pieceType, pieceColor, pieceCode,colorCode);
+			}
+			else if(pieceType.equals("Queen")) {
+				piece = new Queen(pieceType, pieceColor,pieceCode,colorCode);
+			}
+			else if(pieceType.equals("Rook")) {
+				piece = new Rook(pieceType, pieceColor, pieceCode,colorCode);
+			}
+			else if(pieceType.equals("Knight")) {
+				piece = new Knight(pieceType, pieceColor, pieceCode,colorCode);
+			}
+			else if(pieceType.equals("Bishop")) {
+				piece = new Bishop(pieceType, pieceColor, pieceCode,colorCode);
+			}
+			theBoard.placePiece(command.getDestinRow(), command.getDestinColumn(), piece);
+	}
+	
+	private void makeMove(Command command){
+		Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
+		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
+		Move theMove = new Move(source, destination);
+		theBoard.turnTaking(theMove);
+	}
+	
+	private void capturing(Command command){
+		Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
+		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
+		Move theMove = new Move(source, destination);
+		theBoard.makeMove(theMove);
+		
 	}
 
 }
