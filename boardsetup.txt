@@ -32,7 +32,10 @@ plg2
 plh2
 d2d4
 e7e5
-d7d6
 a2a4
-b2b4
 e5 d4*
+b2b4
+e8e7
+d1d3
+f7f6
+d3e4

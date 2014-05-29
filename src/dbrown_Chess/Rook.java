@@ -3,9 +3,6 @@ package dbrown_Chess;
 import java.util.ArrayList;
 
 public class Rook extends Piece{
-
-	private final int ROW_LENGTH = 8;
-	private final int COL_LENGTH = 8;
 	
 	
 	public Rook(String pieceType, String pieceColor, String pieceTypeCode,
@@ -18,25 +15,15 @@ public class Rook extends Piece{
 	public ArrayList<Position> getMoves(Position thePosition, Board theBoard) {
 		ArrayList<Position> validMoves = new ArrayList<Position>();
 	    
-		for(int i = 0; i < ROW_LENGTH; i++){
-			addUnoccupiedPosition(thePosition.getRow()+i, thePosition.getCol(), theBoard, validMoves); //moving up the rows
-			addUnoccupiedPosition(thePosition.getRow()-i, thePosition.getCol(), theBoard, validMoves); //moving down the rows
-			addUnoccupiedPosition(thePosition.getRow(), thePosition.getCol()+i, theBoard, validMoves); //moving across the columns
-			addUnoccupiedPosition(thePosition.getRow(), thePosition.getCol()-i, theBoard, validMoves); //moving down across the columns
+		for(int i = 0; i < 8; i++){
+			addAvailablePosition(thePosition.getRow()+i, thePosition.getCol(), theBoard, validMoves, true); //moving up the rows
+			addAvailablePosition(thePosition.getRow()-i, thePosition.getCol(), theBoard, validMoves, true); //moving down the rows
+			addAvailablePosition(thePosition.getRow(), thePosition.getCol()+i, theBoard, validMoves, true); //moving across the columns
+			addAvailablePosition(thePosition.getRow(), thePosition.getCol()-i, theBoard, validMoves, true); //moving down across the columns
 		}
 		return validMoves;
 	}
 	
-	//Move this method into the piece class
-	private void addUnoccupiedPosition(int row, int col, Board theBoard,
-			ArrayList<Position> validMoves) {
-		if(row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH){
-			Position newPosition = new Position(row, col);
-			if(!theBoard.hasPiece(newPosition)){
-				validMoves.add(newPosition);
-			}
-		}
-	}
 
 
 

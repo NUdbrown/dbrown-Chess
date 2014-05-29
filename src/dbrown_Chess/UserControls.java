@@ -25,7 +25,6 @@ public class UserControls {
 		try {
 			CommandParser parser = new CommandParser();
 			buff = Files.newBufferedReader(filePath, Charset.defaultCharset());
-			//Board theBoard = new Board();
 			do {
 				String line = buff.readLine();
 					Command command = parser.parseCommand(line);
@@ -37,6 +36,7 @@ public class UserControls {
 					}
 					else if(command.getTypeCommand().equals(CommandType.CAPTURE)){
 						capturing(command);
+						
 					}
 					
 					
@@ -86,15 +86,22 @@ public class UserControls {
 		Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
 		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
 		Move theMove = new Move(source, destination);
+		theBoard.checkForCheck(theBoard.getPiece(source).getPieceColor(), theBoard);
 		theBoard.turnTaking(theMove);
+		
 	}
 	
 	private void capturing(Command command){
 		Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
 		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
 		Move theMove = new Move(source, destination);
-		theBoard.makeMove(theMove);
+		theBoard.turnTaking(theMove);
 		
 	}
+	
+//	private void doubleMovement(Command command){
+//		//get first move then make it.
+//		//get second move then make it.
+//	}
 
 }

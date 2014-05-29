@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece{
 
-	private final int ROW_LENGTH = 8;
-	private final int COL_LENGTH = 8;
 	private boolean firstMove = true;
 
 	public Pawn(String pieceType, String pieceColor, String pieceTypeCode, String pieceColorCode) {
@@ -29,21 +27,7 @@ public class Pawn extends Piece{
 		return validMoves;
 	}
 
-	private void addAvailablePosition(int row, int col, Board theBoard,ArrayList<Position> validMoves, boolean isCapturable) {
-		
-		if(row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH){
-			Position newPosition = new Position(row, col);
-			if(theBoard.hasPiece(newPosition)){
-				if(theBoard.getPiece(newPosition).getPieceColorCode()!= this.getPieceColorCode()&&isCapturable){
-					validMoves.add(newPosition);
-				}
-			}		
-			else {
-				validMoves.add(newPosition);
-			}
-			
-		}
-	}
+
 	
 
 

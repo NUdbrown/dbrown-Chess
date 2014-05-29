@@ -1,5 +1,9 @@
 package dbrown_Chess;
 
+import java.util.ArrayList;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 public class Board {
 
 	private static final int BOARD_SIZE = 8;
@@ -16,6 +20,10 @@ public class Board {
 	{
 		String boardLetter= (char)('a' + letter) + "";
 		return boardLetter;
+	}
+	
+	public Piece[][] getBOARD(){
+		return BOARD;
 	}
 	
 	public String boardNumber(int number)
@@ -41,6 +49,32 @@ public class Board {
 			}
 
 		}
+
+	}
+	
+	public void print() {
+
+		for (int letters = 0; letters < BOARD_SIZE; letters++) {
+			System.out.print("   " + (char) ('b' + letters - 1) + " ");
+		}
+		System.out.println();
+		for (int x = 0; x < BOARD_SIZE; x++) {
+			System.out.print(BOARD_SIZE - x + " ");
+
+			for (int y = 0; y < BOARD_SIZE; y++) {
+				Piece piece = BOARD[x][y];
+				if(piece == null)
+				{
+					System.out.print("[" + "__" + "] ");
+				}
+				else
+				System.out.print("[" + piece.getPieceColorCode().toUpperCase() + piece.getPieceTypeCode().toUpperCase() + "] ");
+
+			}
+			System.out.println();
+
+		}
+		System.out.println();
 
 	}
 	
@@ -103,32 +137,52 @@ public class Board {
 
 	}
 	
-	
-	public void print() {
+	public boolean checkForCheck(String color, Board theBoard){
+		Boolean inCheck = false;
+		ArrayList<Piece> boardPieces = new ArrayList<Piece>();
+		Position kingPosition = getKingsLocation(color);
 
-		for (int letters = 0; letters < BOARD_SIZE; letters++) {
-			System.out.print("   " + (char) ('b' + letters - 1) + " ");
-		}
-		System.out.println();
-		for (int x = 0; x < BOARD_SIZE; x++) {
-			System.out.print(BOARD_SIZE - x + " ");
-
-			for (int y = 0; y < BOARD_SIZE; y++) {
-				Piece piece = BOARD[x][y];
-				if(piece == null)
-				{
-					System.out.print("[" + "__" + "] ");
+		for(Position pos : positionsOnTheBoard()){
+			if(hasPiece(pos)){
+				Piece p = getPiece(pos);
+				if(!p.getPieceColor().equals(color)){
+					for(Position destinPos : p.getMoves(pos, theBoard)){
+						if(destinPos.equals(kingPosition)){
+							inCheck = true;
+						}
+					}
 				}
-				else
-				System.out.print("[" + piece.getPieceColorCode().toUpperCase() + piece.getPieceTypeCode().toUpperCase() + "] ");
-
 			}
-			System.out.println();
-
 		}
-		System.out.println();
+
+		return inCheck;	
+
+	}		
+	
+	public Position getKingsLocation(String color){
+		Position kingPos = null;		
+		for(Position p: positionsOnTheBoard()){
+			Piece thePiece = getPiece(p);
+			if(hasPiece(p) && thePiece instanceof King && color.equals(thePiece.getPieceColor())){
+				kingPos = p;						
+				return kingPos;
+			}
+		}
+		{
+			throw new NullPointerException("There aren't any Kings on the Board");
+		}
 
 	}
 
+	public ArrayList<Position> positionsOnTheBoard(){
+		ArrayList<Position> boardPositions = new ArrayList<Position>();
+		for (int x = 0; x < BOARD_SIZE; x++) {
+			for (int y = 0; y < BOARD_SIZE; y++) {
+				Position newPos = new Position(x,y);				
+				boardPositions.add(newPos);
+			}
+		}
+		return boardPositions;		
+	}
 
 }

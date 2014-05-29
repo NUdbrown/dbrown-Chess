@@ -9,6 +9,8 @@ public abstract class Piece {
 	private String pieceColor;
 	private String pieceTypeCode;
 	private String pieceColorCode;
+	private final int ROW_LENGTH = 8;
+	private final int COL_LENGTH = 8;
 	
 
 
@@ -36,6 +38,22 @@ public boolean isValidMove(Move theMove, Board theBoard){
 }
 
 public abstract ArrayList<Position> getMoves(Position thePosition, Board theBoard); 
+
+public void addAvailablePosition(int row, int col, Board theBoard,ArrayList<Position> validMoves, boolean isCapturable) {
+	
+	if(row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH){
+		Position newPosition = new Position(row, col);
+		if(theBoard.hasPiece(newPosition)){
+			if(theBoard.getPiece(newPosition).getPieceColorCode()!= this.getPieceColorCode()&&isCapturable){
+				validMoves.add(newPosition);
+			}
+		}		
+		else {
+			validMoves.add(newPosition);
+		}
+		
+	}
+}
 
 public String getPieceColor() {
 	return pieceColor;
