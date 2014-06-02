@@ -41,7 +41,7 @@ public class UserControls {
 					
 					
 			} while (buff.ready());
-			theBoard.print();
+			//theBoard.print();
 
 		} catch (FileNotFoundException e) {
 
@@ -86,8 +86,10 @@ public class UserControls {
 		Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
 		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
 		Move theMove = new Move(source, destination);
-		theBoard.checkForCheck(theBoard.getPiece(source).getPieceColor(), theBoard);
 		theBoard.turnTaking(theMove);
+		//theBoard.checkForCheck(theBoard.getPiece(destination).getPieceColor(), theBoard);
+		theBoard.print();
+		
 		
 	}
 	
@@ -96,6 +98,7 @@ public class UserControls {
 		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
 		Move theMove = new Move(source, destination);
 		theBoard.turnTaking(theMove);
+		theBoard.print();
 		
 	}
 	

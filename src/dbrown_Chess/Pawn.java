@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece{
 
-	private boolean firstMove = true;
+	
 
 	public Pawn(String pieceType, String pieceColor, String pieceTypeCode, String pieceColorCode) {
 		super(pieceType, pieceColor, pieceTypeCode, pieceColorCode);
@@ -23,11 +23,10 @@ public class Pawn extends Piece{
 		addAvailablePosition(thePosition.getRow() + (direction * 1),thePosition.getCol() + 1, theBoard, validMoves, true);
 		addAvailablePosition(thePosition.getRow() + (direction * 1),thePosition.getCol() - 1, theBoard, validMoves, true);
 		
-		firstMove = false;
 		return validMoves;
 	}
 
-
+	
 	
 
 

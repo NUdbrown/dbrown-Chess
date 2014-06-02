@@ -90,8 +90,10 @@ public class Board {
 			if(thePiece.isValidMove(theMove, this)){
 				BOARD[theMove.getSource().getRow()][theMove.getSource().getCol()] = null;
 				BOARD[theMove.getDestination().getRow()][theMove.getDestination().getCol()] = thePiece;
+				thePiece.setMoved();
 			}
-		}		
+		}
+		
 
 	}
 	
@@ -117,6 +119,7 @@ public class Board {
 			if (pieceToMove.getPieceColor().equals("light")) {
 				makeMove(theMove);
 				isLightTurn = false;
+				checkForCheck(theMove);
 
 			} else {
 				System.out.println("It is not your turn!");
@@ -128,51 +131,89 @@ public class Board {
 			if (pieceToMove.getPieceColor().equals("dark")) {
 				makeMove(theMove);
 				isLightTurn = true;
-
+				checkForCheck(theMove);
 			} else {
 				System.out.println("It is not your turn!");
 			}
 
 		}
-
+		
 	}
 	
-	public boolean checkForCheck(String color, Board theBoard){
-		Boolean inCheck = false;
-		ArrayList<Piece> boardPieces = new ArrayList<Piece>();
-		Position kingPosition = getKingsLocation(color);
-
-		for(Position pos : positionsOnTheBoard()){
-			if(hasPiece(pos)){
-				Piece p = getPiece(pos);
-				if(!p.getPieceColor().equals(color)){
-					for(Position destinPos : p.getMoves(pos, theBoard)){
-						if(destinPos.equals(kingPosition)){
-							inCheck = true;
-						}
-					}
+	/**go through every one of piece's (param) moves list
+	*see if there is a piece at the other end
+	* if that piece is a king && that kind's color != piece (param)'s color
+	* piece can attack king
+	**/ 
+	
+	public boolean checkForKingCapture(Piece thePiece, Position pos){
+		boolean canCaptureKing = false;
+		
+		for(Position p: thePiece.getMoves(pos, this)){
+			if(hasPiece(p)){
+				Piece endPiece = getPiece(p);
+				if(endPiece instanceof King && !endPiece.getPieceColor().equals(thePiece.getPieceColor())){
+					canCaptureKing = true;
+					System.out.println(thePiece.getPieceColor().toUpperCase()+" "+thePiece.getPieceType()+" can attack "+ endPiece.getPieceColor().toUpperCase() +" King!");
 				}
+					
 			}
-		}
-
-		return inCheck;	
-
-	}		
-	
-	public Position getKingsLocation(String color){
-		Position kingPos = null;		
-		for(Position p: positionsOnTheBoard()){
-			Piece thePiece = getPiece(p);
-			if(hasPiece(p) && thePiece instanceof King && color.equals(thePiece.getPieceColor())){
-				kingPos = p;						
-				return kingPos;
-			}
-		}
-		{
-			throw new NullPointerException("There aren't any Kings on the Board");
-		}
-
+			
+		}		
+		
+		return canCaptureKing;
 	}
+	
+	public boolean checkForCheck(Move theMove){
+		boolean isInCheck = false;
+		Position kingPos = null;
+	
+		if(checkForKingCapture(getPiece(theMove.getDestination()), theMove.getDestination())){
+			isInCheck = true;
+			System.out.println("Is in Check!");
+		}
+		return isInCheck;
+	}
+	
+	
+//	public boolean checkForCheck(String color, Board theBoard){
+//		Boolean inCheck = false;
+//		ArrayList<Piece> boardPieces = new ArrayList<Piece>();
+//		Position kingPosition = getKingsLocation();
+//
+//		for(Position pos : positionsOnTheBoard()){
+//			if(hasPiece(pos)){
+//				Piece p = getPiece(pos);
+//				if(!p.getPieceColor().equals(color)){
+//					ArrayList<Position> listOfMoves = p.getMoves(pos, this);
+//					for(Position destinPos : listOfMoves){
+//						if(destinPos.equals(kingPosition)){
+//							inCheck = true;
+//							System.out.println(color.toUpperCase() + " King is in check");
+//						}
+//					}
+//				}
+//			}
+//		}
+//
+//		return inCheck;	
+//
+//	}		
+//
+//	public Position getKingsLocation(String color){
+//		Position kingPos = null;		
+//		for(Position p: positionsOnTheBoard()){
+//			Piece thePiece = getPiece(p);
+//			if(hasPiece(p) && thePiece instanceof King && color.equals(thePiece.getPieceColor())){
+//				kingPos = p;						
+//				return kingPos;
+//			}
+//		}
+//		{
+//			throw new NullPointerException("There aren't any Kings on the Board");
+//		}
+//
+//	}
 
 	public ArrayList<Position> positionsOnTheBoard(){
 		ArrayList<Position> boardPositions = new ArrayList<Position>();
@@ -183,6 +224,17 @@ public class Board {
 			}
 		}
 		return boardPositions;		
+	}
+	
+	public ArrayList<Piece> piecesOnTheBoard(){
+		ArrayList<Piece>boardPieces = new ArrayList<Piece>();
+		
+		for(Position p: positionsOnTheBoard()){
+			Piece piece = getPiece(p);
+			boardPieces.add(piece);
+		}
+		
+		return boardPieces;
 	}
 
 }

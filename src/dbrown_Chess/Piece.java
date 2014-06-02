@@ -55,6 +55,12 @@ public void addAvailablePosition(int row, int col, Board theBoard,ArrayList<Posi
 	}
 }
 
+protected boolean firstMove = true;
+
+public void setMoved(){
+	firstMove = false;
+}
+
 public String getPieceColor() {
 	return pieceColor;
 }
