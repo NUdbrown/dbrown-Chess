@@ -12,19 +12,111 @@ public class Queen extends Piece {
 	@Override
 	public ArrayList<Position> getMoves(Position thePosition, Board theBoard) {
 		ArrayList<Position> validMoves = new ArrayList<Position>();
-	    
-		for(int i = 1; i < 8; i++){
-			addAvailablePosition(thePosition.getRow()+i, thePosition.getCol(), theBoard, validMoves, true); //moving up the rows
-			addAvailablePosition(thePosition.getRow()-i, thePosition.getCol(), theBoard, validMoves, true); //moving down the rows
-			addAvailablePosition(thePosition.getRow(), thePosition.getCol()+i, theBoard, validMoves, true); //moving across the columns
-			addAvailablePosition(thePosition.getRow(), thePosition.getCol()-i, theBoard, validMoves, true); //moving down across the columns
-			addAvailablePosition(thePosition.getRow()+i, thePosition.getCol()+i, theBoard, validMoves, true); //moving up diagonally to the right
-			addAvailablePosition(thePosition.getRow()+i, thePosition.getCol()-i, theBoard, validMoves, true); //moving up diagonally to the left
-			addAvailablePosition(thePosition.getRow()-i, thePosition.getCol()+i, theBoard, validMoves, true); //moving down diagonally to the left
-			addAvailablePosition(thePosition.getRow()-i, thePosition.getCol()-i, theBoard, validMoves, true); //moving down diagonally to the right
+		boolean foundPiece = false;
+		
+		//diagonal movements
+		for (int i = 1; !foundPiece && (i < SIZE); i++) {
+			Position targetPos = new Position(thePosition.getRow() + i,thePosition.getCol() + i);
+			if (targetPos.isOnBoard()&& !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
 		}
-		return validMoves;
+		
+		for(int i = 1; !foundPiece && (i < SIZE); i++){
+			Position targetPos = new Position(thePosition.getRow()+i, thePosition.getCol()-i);
+			if (targetPos.isOnBoard() && !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
+		}
+		
+		for(int i = 1; !foundPiece && (i < SIZE); i++){
+			Position targetPos = new Position(thePosition.getRow()-i, thePosition.getCol()+i);
+			if (targetPos.isOnBoard() && !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
+		}
+		
+		for(int i = 1; !foundPiece && (i < SIZE); i++){
+			Position targetPos = new Position(thePosition.getRow()-i, thePosition.getCol()-i);
+			if (targetPos.isOnBoard() && !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
+		}
+		
+		// row movement
+		for(int i = 1; !foundPiece && (i <= SIZE); i++){
+			Position targetPos = new Position(thePosition.getRow()+i, thePosition.getCol());
+			if (targetPos.isOnBoard() && !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
+		}
+
+		for(int i = 1; !foundPiece && (i <= SIZE); i++){
+			Position targetPos = new Position(thePosition.getRow()-i, thePosition.getCol());
+			if (targetPos.isOnBoard() && !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
+		}
+
+		//available column movements
+		for(int i = 1; !foundPiece && (i <= SIZE); i++){
+			Position targetPos = new Position(thePosition.getRow(), thePosition.getCol()-i);
+			if (targetPos.isOnBoard() && !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
+		}
+
+		for(int i = 1; !foundPiece && (i <= SIZE); i++){
+			Position targetPos = new Position(thePosition.getRow(), thePosition.getCol()+i);
+			if (targetPos.isOnBoard() && !thePosition.equals(targetPos)
+					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+				addAvailablePosition(targetPos, theBoard, validMoves, true);
+				if (theBoard.hasPiece(targetPos)) {
+					break;
+				}
+
+			}
+		}	
+
+		
+	return validMoves;
 	}
+
 	
 
 

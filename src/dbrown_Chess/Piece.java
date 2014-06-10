@@ -6,11 +6,12 @@ public abstract class Piece {
 	
 	
 	private String pieceType;
-	private String pieceColor;
-	private String pieceTypeCode;
+	protected String pieceColor;
+	protected String pieceTypeCode;
 	private String pieceColorCode;
-	private final int ROW_LENGTH = 8;
-	private final int COL_LENGTH = 8;
+	protected final int ROW_LENGTH = 8;
+	protected final int COL_LENGTH = 8;
+	protected final int SIZE = 8;
 	
 
 
@@ -41,8 +42,13 @@ public abstract ArrayList<Position> getMoves(Position thePosition, Board theBoar
 
 public void addAvailablePosition(int row, int col, Board theBoard,ArrayList<Position> validMoves, boolean isCapturable) {
 	
-	if(row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH){
-		Position newPosition = new Position(row, col);
+	Position newPosition = new Position(row, col);
+	addAvailablePosition(newPosition, theBoard, validMoves, isCapturable);
+}
+
+public void addAvailablePosition(Position newPosition, Board theBoard,ArrayList<Position> validMoves, boolean isCapturable) {
+
+	if(newPosition.isOnBoard()){
 		if(theBoard.hasPiece(newPosition)){
 			if(theBoard.getPiece(newPosition).getPieceColorCode()!= this.getPieceColorCode()&&isCapturable){
 				validMoves.add(newPosition);

@@ -2,6 +2,8 @@ package dbrown_Chess;
 
 public class Position {
 
+	private static final int ROW_LENGTH = 8;
+	private static final int COL_LENGTH = 8;
 	private int row;
 	private int col;
 	
@@ -46,6 +48,10 @@ public class Position {
 				
 		this.row = 7 - (theRow -'1');
 		this.col = theCol - 'a';		
+	}
+	
+	public boolean isOnBoard(){		
+		return row >= 0 && row < ROW_LENGTH && col >= 0 && col < COL_LENGTH;
 	}
 	
 	

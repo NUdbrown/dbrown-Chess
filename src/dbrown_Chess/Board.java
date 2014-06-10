@@ -130,7 +130,7 @@ public class Board {
 		else {
 			if (pieceToMove.getPieceColor().equals("dark")) {
 				makeMove(theMove);
-				isLightTurn = true;
+				isLightTurn = true; 
 				checkForCheck(pieceToMove.getPieceColor());
 			} else {
 				System.out.println("It is not your turn!");
@@ -157,7 +157,7 @@ public class Board {
 		
 		return canCaptureKing;
 	}
-	
+
 	public boolean checkForCheck(String color){
 		boolean isInCheck = false;
 		
@@ -175,6 +175,18 @@ public class Board {
 		return isInCheck;
 	}
 	
+	public boolean checkForCheckmate(){
+		boolean checkmate = false;
+		
+		/**
+		 *if the king is in check,  check its moves to see if he can move out of check if not
+		 *then he is in checkmate.
+		 *
+		 */
+		
+		return checkmate;
+	}
+	
 	public ArrayList<Position> positionsOnTheBoard(){
 		ArrayList<Position> boardPositions = new ArrayList<Position>();
 		for (int x = 0; x < BOARD_SIZE; x++) {
@@ -190,11 +202,31 @@ public class Board {
 		ArrayList<Piece>boardPieces = new ArrayList<Piece>();
 		
 		for(Position p: positionsOnTheBoard()){
-			Piece piece = getPiece(p);
-			boardPieces.add(piece);
+			if(hasPiece(p)){
+				Piece piece = getPiece(p);
+				boardPieces.add(piece);
+			}			
 		}
 		
 		return boardPieces;
 	}
+	
+	public String otherColor(String color){
+		if(color.equals("light")){
+			color = "dark";
+		}
+		
+		return "light";
+	}
+
+
+	public boolean isEmptyOrHasColor(Position targetPos, String otherColor) {
+		
+		return hasPiece(targetPos) && getPiece(targetPos).getPieceColor().equals(otherColor) || !hasPiece(targetPos);
+	}
+
+
+
+
 
 }
