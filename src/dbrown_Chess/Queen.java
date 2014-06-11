@@ -17,8 +17,7 @@ public class Queen extends Piece {
 		//diagonal movements
 		for (int i = 1; !foundPiece && (i < SIZE); i++) {
 			Position targetPos = new Position(thePosition.getRow() + i,thePosition.getCol() + i);
-			if (targetPos.isOnBoard()&& !thePosition.equals(targetPos)
-					&& theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
+			if (targetPos.isOnBoard()&& !thePosition.equals(targetPos) && theBoard.isEmptyOrHasColor(targetPos, theBoard.otherColor(pieceColor))) {
 				addAvailablePosition(targetPos, theBoard, validMoves, true);
 				if (theBoard.hasPiece(targetPos)) {
 					break;

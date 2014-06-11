@@ -80,6 +80,7 @@ public class UserControls {
 				piece = new Bishop(pieceType, pieceColor, pieceCode,colorCode);
 			}
 			theBoard.placePiece(command.getDestinRow(), command.getDestinColumn(), piece);
+			
 	}
 	
 	private void makeMove(Command command){
