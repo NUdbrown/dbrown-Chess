@@ -16,7 +16,7 @@ public class King extends Piece{
 		
 		ArrayList<Position> validMoves = new ArrayList<Position>();		
 	
-		if(!selfInCheck(theBoard, thePosition)){
+		//if(!selfInCheck(theBoard, thePosition)){
 			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol(), theBoard, validMoves, true);
 			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol(), theBoard, validMoves, true); 
 			addAvailablePosition(thePosition.getRow(), thePosition.getCol()+1, theBoard, validMoves, true); 
@@ -25,32 +25,32 @@ public class King extends Piece{
 			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol()-1, theBoard, validMoves, true); 
 			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol()-1, theBoard, validMoves, true); 
 			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol()+1, theBoard, validMoves, true); 
-		}
+		//}
 	
 		return validMoves;
 	}
 	
-	public boolean selfInCheck(Board theBoard, Position pos){
-		boolean putSelfInCheck = false;
-		
-		Position kingsLocation = theBoard.getPositionOfPiece(this);
-		
-		for(Piece piece: theBoard.piecesOnTheBoard()){
-			if(!piece.getPieceColor().equals(pieceColor)){
-				for(Position p: piece.getMoves(theBoard.getPositionOfPiece(piece), theBoard)){
-					if(kingsLocation.getRow() == p.getRow() || kingsLocation.getCol() == p.getCol()){
-						putSelfInCheck = true;
-						//System.out.println("No, you cant move..put self in check");
-					}
-				}
-			}
-		}
-				
-		
-		return putSelfInCheck;
-		
-		
-	}
+//	public boolean selfInCheck(Board theBoard, Position pos){
+//		boolean putSelfInCheck = false;
+//		
+//		Position kingsLocation = theBoard.getPositionOfPiece(this);
+//		
+//		for(Piece piece: theBoard.piecesOnTheBoard()){
+//			if(!piece.getPieceColor().equals(pieceColor)){
+//				for(Position p: piece.getMoves(theBoard.getPositionOfPiece(piece), theBoard)){
+//					if(kingsLocation.getRow() == p.getRow() && kingsLocation.getCol() == p.getCol()){
+//						putSelfInCheck = true;
+//						//System.out.println("No, you cant move..put self in check");
+//					}
+//				}
+//			}
+//		}
+//				
+//		
+//		return putSelfInCheck;
+//		
+//		
+//	}
 
 		
 

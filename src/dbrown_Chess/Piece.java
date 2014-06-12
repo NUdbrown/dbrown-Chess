@@ -63,8 +63,17 @@ public void addAvailablePosition(Position newPosition, Board theBoard,ArrayList<
 
 protected boolean firstMove = true;
 
+
 public void setMoved(){
 	firstMove = false;
+}
+
+public void setFirstMove(boolean moved){
+	firstMove = moved;
+}
+
+public boolean getFirstMove(){
+	return firstMove;
 }
 
 public String getPieceColor() {

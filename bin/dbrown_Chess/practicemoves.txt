@@ -1,6 +1,0 @@
-qld1
-kde8
-d8 h4
-c4 d6*
-e1 g1 h1 f1
-h1 h2

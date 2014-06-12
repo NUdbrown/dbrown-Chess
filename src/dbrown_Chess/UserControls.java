@@ -13,15 +13,17 @@ import dbrown_Chess.Command.CommandType;
 public class UserControls {
 
 	BufferedReader buff;
+	BufferedReader buff2;
 	Board theBoard = new Board();
+	Piece piece;
 
 	public static void main(String[] args) throws IOException {
 
-		(new UserControls()).readCommandsFromFile(Paths.get(args[0]));
+		(new UserControls()).readCommandsFromFile(Paths.get(args[0]), Paths.get(args[1]));
 
 	}
 
-	public void readCommandsFromFile(Path filePath) throws IOException {
+	public void readCommandsFromFile(Path filePath, Path moveFilePath) throws IOException {
 		try {
 			CommandParser parser = new CommandParser();
 			buff = Files.newBufferedReader(filePath, Charset.defaultCharset());
@@ -31,7 +33,24 @@ public class UserControls {
 					if(command.getTypeCommand().equals(CommandType.PLACEMENT)){
 						placePiece(command);
 					}
-					else if(command.getTypeCommand().equals(CommandType.MOVE)){
+					
+			
+			} while (buff.ready());
+		} catch (FileNotFoundException e) {
+
+			System.out.println("File not found or doesn't exist!");
+			e.printStackTrace();
+		} finally {
+			buff.close();
+		}	
+		
+		try{
+			CommandParser parser = new CommandParser();
+			buff2 = Files.newBufferedReader(moveFilePath, Charset.defaultCharset());
+			do {
+				String line = buff2.readLine();
+					Command command = parser.parseCommand(line);
+					 if(command.getTypeCommand().equals(CommandType.MOVE)){
 						makeMove(command);
 					}
 					else if(command.getTypeCommand().equals(CommandType.CAPTURE)){
@@ -40,16 +59,16 @@ public class UserControls {
 					}
 					
 					
-			} while (buff.ready());
-			//theBoard.print();
+			} while (buff2.ready() && !theBoard.checkForCheckmate(theBoard.currentTurnColor()));
+	} catch (FileNotFoundException e) {
+		System.out.println("File not found or doesn't exist!");
+		e.printStackTrace();
+	} finally {
+		buff2.close();
+	}
+			
 
-		} catch (FileNotFoundException e) {
-
-			System.out.println("File not found or doesn't exist!");
-			e.printStackTrace();
-		} finally {
-			buff.close();
-		}
+		
 	}
 	
 	private void placePiece(Command command){
@@ -88,7 +107,6 @@ public class UserControls {
 		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
 		Move theMove = new Move(source, destination);
 		theBoard.turnTaking(theMove);
-		//theBoard.checkForCheck(theBoard.getPiece(destination).getPieceColor(), theBoard);
 		theBoard.print();
 		
 		

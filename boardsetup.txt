@@ -30,10 +30,3 @@ ple2
 plf2
 plg2
 plh2
-e2e3
-a7a6
-f1c4
-h7h6
-d1h5
-b8c6
-h5f7

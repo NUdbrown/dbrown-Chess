@@ -1,5 +1,6 @@
 package dbrown_Chess;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
@@ -74,7 +75,7 @@ public class Board {
 			System.out.println();
 
 		}
-		System.out.println("________________________________________");
+		System.out.println();
 
 	}
 	
@@ -101,14 +102,11 @@ public class Board {
 		return BOARD[thePosition.getRow()][thePosition.getCol()];	
 	}
 	
-	
-	
 	public Position getPositionOfPiece(Piece piece){
 		Position piecePos = null;
-		
 		for(Position p: positionsOnTheBoard()){
-			if(hasPiece(p) && getPiece(p) == piece){
-				piecePos = p;
+			if(hasPiece(p) && getPiece(p).equals(piece)){
+				return piecePos = p;
 			}
 		}
 		
@@ -134,7 +132,7 @@ public class Board {
 				makeMove(theMove);
 				isLightTurn = false;
 				checkForKingCapture(pieceToMove, getPositionOfPiece(pieceToMove));
-			
+				
 
 			} else {
 				System.out.println("It is not your turn!");
@@ -147,6 +145,9 @@ public class Board {
 				makeMove(theMove);
 				isLightTurn = true; 
 				checkForKingCapture(pieceToMove, getPositionOfPiece(pieceToMove));
+					
+				
+				
 			} else {
 				System.out.println("It is not your turn!");
 			}
@@ -165,8 +166,8 @@ public class Board {
 					canCaptureKing = true;
 					System.out.println(thePiece.getPieceColor().toUpperCase()+" "+thePiece.getPieceType()+" can attack "+ endPiece.getPieceColor().toUpperCase() +" King!");
 					System.out.println("Is in check!");
-					checkForCheckmate(endPiece, getPositionOfPiece(endPiece));
 				}
+				 
 					
 			}
 			
@@ -175,39 +176,52 @@ public class Board {
 		return canCaptureKing;
 	}
 	
-	public boolean kingIsBlockable(Piece kingPiece, Position pos){
-		boolean blockable = false;
+	public String currentTurnColor(){
+		String color = isLightTurn ? "dark" : "light";
+		return color;
+	}
+	
+	
+	public boolean checkForCheckmate(String color){
 		
-		for (Piece p : piecesOnTheBoard()) {
-			if (p.getPieceColor().equals(kingPiece.getPieceColor())) {
-				for (Position move : p.getMoves(getPositionOfPiece(p), this)) {
-					if (getPositionOfPiece(kingPiece).getRow() == move.getRow()&& pos.getRow() == move.getRow()
-							|| getPositionOfPiece(kingPiece).getCol() == move.getCol() && pos.getCol() == move.getCol()) {
-						blockable = true;
-
-					}
-
+		for(Piece p: piecesOnTheBoard()){
+			if(p.getPieceColor().equals(currentTurnColor())){
+				for(Position des: p.getMoves(getPositionOfPiece(p), this)){
+					Move move = new Move(getPositionOfPiece(p), des);
+					boolean firstMove = p.getFirstMove();
+					boolean check = checkForKingCapture(p, getPositionOfPiece(p));
+					if(hasPiece(des)){
+						Piece savedPiece = BOARD[move.getDestination().getRow()][move.getDestination().getCol()];
+						if(firstMove){
+								makeMove(move);
+								if(check){
+									unMakeMove(move, savedPiece, firstMove);
+								}
+							else{
+								return false;
+							}
+						}
+					}	
+					
+					
+					
 				}
+				
 			}
-		}		
-		
-		return blockable;
-		
-	}
-	
-	public boolean checkForCheckmate(Piece piece, Position position){
-		boolean checkmate = false;
-		if(!kingIsBlockable(piece, position) && piece.getMoves(position, this).isEmpty()){
-			checkmate = true;
-			System.out.println("CHECKMATE!");
-		}
-		else if(kingIsBlockable(piece, position) && piece.getMoves(position, this).isEmpty()){
-			System.out.println("STALEMATE!");
+			
 		}
 		
-		return checkmate;
+		System.out.println("CheckMate!");
+		return true;
 	}
 	
+	public void unMakeMove(Move theMove, Piece savedPiece, boolean wasMoved) {
+		Piece thePiece = BOARD[theMove.getDestination().getRow()][theMove.getDestination().getCol()];
+		BOARD[theMove.getSource().getRow()][theMove.getSource().getCol()] = thePiece;
+		BOARD[theMove.getDestination().getRow()][theMove.getDestination().getCol()] = savedPiece;
+		thePiece.setFirstMove(wasMoved);
+
+	}
 
 	public ArrayList<Position> positionsOnTheBoard(){
 		ArrayList<Position> boardPositions = new ArrayList<Position>();
@@ -225,14 +239,23 @@ public class Board {
 		
 		for(Position p: positionsOnTheBoard()){
 			if(hasPiece(p)){
-				Piece piece = getPiece(p);
-				boardPieces.add(piece);
-			}			
+				boardPieces.add(getPiece(p));
+			}	
+			
 		}
-		
 		return boardPieces;
 	}
 	
+//	public Position kingPosition(){
+//		Position kingPos = null;
+//		for(Position p: positionsOnTheBoard()){
+//			if(hasPiece(p) && getPiece(p) instanceof King){
+//				return kingPos = p;
+//			}
+//		}
+//		
+//		return kingPos;
+//	}
 	
 	public String otherColor(String color){
 		if(color.equals("light")){
