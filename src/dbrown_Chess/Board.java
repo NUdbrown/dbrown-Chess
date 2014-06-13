@@ -131,7 +131,7 @@ public class Board {
 			if (pieceToMove.getPieceColor().equals("light")) {
 				makeMove(theMove);
 				isLightTurn = false;
-				checkForKingCapture(pieceToMove, getPositionOfPiece(pieceToMove));
+				checkForKingCapture(pieceToMove, theMove.getDestination());
 				
 
 			} else {
@@ -144,7 +144,7 @@ public class Board {
 			if (pieceToMove.getPieceColor().equals("dark")) {
 				makeMove(theMove);
 				isLightTurn = true; 
-				checkForKingCapture(pieceToMove, getPositionOfPiece(pieceToMove));
+				checkForKingCapture(pieceToMove, theMove.getDestination());
 					
 				
 				
@@ -154,6 +154,19 @@ public class Board {
 
 		}
 		
+	}
+	
+	public boolean isInCheck(String color){
+		boolean check = false;
+		for(Piece p: piecesOnTheBoard()){
+			if(p.getPieceColor().equals(color)){
+				if(checkForKingCapture(p, getPositionOfPiece(p))){
+					check = true;
+				}
+			}
+		}	
+		
+		return check;
 	}
 	
 	public boolean checkForKingCapture(Piece thePiece, Position pos){
@@ -177,40 +190,37 @@ public class Board {
 	}
 	
 	public String currentTurnColor(){
-		String color = isLightTurn ? "dark" : "light";
+		String color = isLightTurn ? "light" : "dark";
 		return color;
 	}
-	
+	// Save the destination piece
+	// make move
+	// see if we are in check
+	// unmake move
+	// if we were not in check return false 		
 	
 	public boolean checkForCheckmate(String color){
 		
 		for(Piece p: piecesOnTheBoard()){
-			if(p.getPieceColor().equals(currentTurnColor())){
+			if(p.getPieceColor().equals(color)){
 				for(Position des: p.getMoves(getPositionOfPiece(p), this)){
 					Move move = new Move(getPositionOfPiece(p), des);
 					boolean firstMove = p.getFirstMove();
-					boolean check = checkForKingCapture(p, getPositionOfPiece(p));
-					if(hasPiece(des)){
-						Piece savedPiece = BOARD[move.getDestination().getRow()][move.getDestination().getCol()];
-						if(firstMove){
-								makeMove(move);
-								if(check){
-									unMakeMove(move, savedPiece, firstMove);
-								}
-							else{
-								return false;
-							}
+					Piece savedPiece = BOARD[move.getDestination().getRow()][move.getDestination().getCol()];
+					makeMove(move);
+					boolean check = isInCheck(color);						
+					unMakeMove(move, savedPiece, firstMove);
+						
+						if(!check){
+							return false;
 						}
-					}	
-					
-					
+									
 					
 				}
 				
 			}
 			
 		}
-		
 		System.out.println("CheckMate!");
 		return true;
 	}

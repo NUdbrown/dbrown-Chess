@@ -59,7 +59,8 @@ public class UserControls {
 					}
 					
 					
-			} while (buff2.ready() && !theBoard.checkForCheckmate(theBoard.currentTurnColor()));
+			} while (!theBoard.checkForCheckmate(theBoard.currentTurnColor()) && buff2.ready());
+			theBoard.print();
 	} catch (FileNotFoundException e) {
 		System.out.println("File not found or doesn't exist!");
 		e.printStackTrace();
