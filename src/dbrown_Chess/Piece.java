@@ -29,7 +29,7 @@ public Piece(String pieceTypeCode, String pieceColorCode){
 public boolean isValidMove(Move theMove, Board theBoard){
 	ArrayList<Position> listOfMoves = getMoves(theMove.getSource(), theBoard);
 	for( Position p: listOfMoves ){
-		if(p.equals(theMove.getDestination())){
+		if(p.equals(theMove.getDestination())){ //remember to account for moving into checkmate.
 			return true;
 		}
 	}

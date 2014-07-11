@@ -208,7 +208,7 @@ public class Board {
 					boolean firstMove = p.getFirstMove();
 					Piece savedPiece = BOARD[move.getDestination().getRow()][move.getDestination().getCol()];
 					makeMove(move);
-					boolean check = isInCheck(color);						
+					boolean check = isInCheck(otherColor(color));						
 					unMakeMove(move, savedPiece, firstMove);
 						
 						if(!check){
