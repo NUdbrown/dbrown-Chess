@@ -17,14 +17,14 @@ public class King extends Piece{
 		ArrayList<Position> validMoves = new ArrayList<Position>();		
 	
 		//if(!selfInCheck(theBoard, thePosition)){
-			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol(), theBoard, validMoves, true);
-			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol(), theBoard, validMoves, true); 
-			addAvailablePosition(thePosition.getRow(), thePosition.getCol()+1, theBoard, validMoves, true); 
-			addAvailablePosition(thePosition.getRow(), thePosition.getCol()-1, theBoard, validMoves, true); 
-			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol()+1, theBoard, validMoves, true); 
-			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol()-1, theBoard, validMoves, true); 
-			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol()-1, theBoard, validMoves, true); 
-			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol()+1, theBoard, validMoves, true); 
+			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol(), theBoard, validMoves);
+			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol(), theBoard, validMoves); 
+			addAvailablePosition(thePosition.getRow(), thePosition.getCol()+1, theBoard, validMoves); 
+			addAvailablePosition(thePosition.getRow(), thePosition.getCol()-1, theBoard, validMoves); 
+			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol()+1, theBoard, validMoves); 
+			addAvailablePosition(thePosition.getRow()-1, thePosition.getCol()-1, theBoard, validMoves); 
+			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol()-1, theBoard, validMoves); 
+			addAvailablePosition(thePosition.getRow()+1, thePosition.getCol()+1, theBoard, validMoves); 
 		//}
 	
 		return validMoves;

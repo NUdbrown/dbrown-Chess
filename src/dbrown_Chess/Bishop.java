@@ -18,14 +18,12 @@ public class Bishop extends Piece{
 		for(int i = 1; !foundPiece && (i < SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow()+i, thePosition.getCol()+i);
 			if(targetPos.isOnBoard()){
-				addAvailablePosition(thePosition.getRow()+i, thePosition.getCol()+i, theBoard, validMoves, true);
+				addAvailablePosition(targetPos, theBoard, validMoves);
 				
-				if(theBoard.hasPiece(targetPos))
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
 				{
-					if(!thePosition.equals(targetPos))
-					{
 						break;
-					}
+					
 				}
 
 			}
@@ -34,14 +32,11 @@ public class Bishop extends Piece{
 		for(int i = 1; !foundPiece && (i < SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow()+i, thePosition.getCol()-i);
 			if(targetPos.isOnBoard()){
-				addAvailablePosition(thePosition.getRow()+i, thePosition.getCol()-i, theBoard, validMoves, true);
+				addAvailablePosition(targetPos, theBoard, validMoves);
 
-				if(theBoard.hasPiece(targetPos))
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
 				{
-					if(!thePosition.equals(targetPos))
-					{
 						break;
-					}
 				}
 
 			}
@@ -50,14 +45,11 @@ public class Bishop extends Piece{
 		for(int i = 1; !foundPiece && (i < SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow()-i, thePosition.getCol()+i);
 			if(targetPos.isOnBoard()){
-				addAvailablePosition(thePosition.getRow()-i, thePosition.getCol()+i, theBoard, validMoves, true);
+				addAvailablePosition(targetPos, theBoard, validMoves);
 
-				if(theBoard.hasPiece(targetPos))
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
 				{
-					if(!thePosition.equals(targetPos))
-					{
 						break;
-					}
 				}
 
 			}
@@ -66,14 +58,11 @@ public class Bishop extends Piece{
 		for(int i = 1; !foundPiece && (i < SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow()-i, thePosition.getCol()-i);
 			if(targetPos.isOnBoard()){
-				addAvailablePosition(thePosition.getRow()-i, thePosition.getCol()-i, theBoard, validMoves, true);
+				addAvailablePosition(targetPos, theBoard, validMoves);
 
-				if(theBoard.hasPiece(targetPos))
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
 				{
-					if(!thePosition.equals(targetPos))
-					{
 						break;
-					}
 				}
 
 			}

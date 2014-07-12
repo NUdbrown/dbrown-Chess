@@ -95,7 +95,6 @@ public class Board {
 			}
 		}
 		
-
 	}
 	
 	public Piece getPiece(Position thePosition){
@@ -105,7 +104,7 @@ public class Board {
 	public Position getPositionOfPiece(Piece piece){
 		Position piecePos = null;
 		for(Position p: positionsOnTheBoard()){
-			if(hasPiece(p) && getPiece(p).equals(piece)){
+			if(isPieceAtPosition(p) && getPiece(p).equals(piece)){
 				return piecePos = p;
 			}
 		}
@@ -113,7 +112,7 @@ public class Board {
 		return piecePos;
 	}
 	
-	public boolean hasPiece(Position thePosition) {
+	public boolean isPieceAtPosition(Position thePosition) {
 		return getPiece(thePosition) != null;
 	}
 	
@@ -131,7 +130,7 @@ public class Board {
 			if (pieceToMove.getPieceColor().equals("light")) {
 				makeMove(theMove);
 				isLightTurn = false;
-				checkForKingCapture(pieceToMove, theMove.getDestination());
+				canCaptureKing(pieceToMove);
 				
 
 			} else {
@@ -144,7 +143,7 @@ public class Board {
 			if (pieceToMove.getPieceColor().equals("dark")) {
 				makeMove(theMove);
 				isLightTurn = true; 
-				checkForKingCapture(pieceToMove, theMove.getDestination());
+				canCaptureKing(pieceToMove);
 					
 				
 				
@@ -156,12 +155,13 @@ public class Board {
 		
 	}
 	
-	public boolean isInCheck(String color){
+	public boolean isInCheck(String kingsColor){
 		boolean check = false;
 		for(Piece p: piecesOnTheBoard()){
-			if(p.getPieceColor().equals(color)){
-				if(checkForKingCapture(p, getPositionOfPiece(p))){
+			if(!p.getPieceColor().equals(kingsColor)){
+				if(canCaptureKing(p)){
 					check = true;
+					break;
 				}
 			}
 		}	
@@ -169,12 +169,14 @@ public class Board {
 		return check;
 	}
 	
-	public boolean checkForKingCapture(Piece thePiece, Position pos){
+	public boolean canCaptureKing(Piece thePiece){
 		boolean canCaptureKing = false;
 		
-		for(Position p: thePiece.getMoves(pos, this)){
-			if(hasPiece(p)){
-				Piece endPiece = getPiece(p);
+		Position pos = getPositionOfPiece(thePiece);
+		
+		for(Position position: thePiece.getMoves(pos, this)){
+			if(isPieceAtPosition(position)){
+				Piece endPiece = getPiece(position);
 				if(endPiece instanceof King && !endPiece.getPieceColor().equals(thePiece.getPieceColor())){
 					canCaptureKing = true;
 					System.out.println(thePiece.getPieceColor().toUpperCase()+" "+thePiece.getPieceType()+" can attack "+ endPiece.getPieceColor().toUpperCase() +" King!");
@@ -199,16 +201,16 @@ public class Board {
 	// unmake move
 	// if we were not in check return false 		
 	
-	public boolean checkForCheckmate(String color){
+	public boolean isInCheckmate(String movingTeamsColor){
 		
 		for(Piece p: piecesOnTheBoard()){
-			if(p.getPieceColor().equals(color)){
+			if(p.getPieceColor().equals(movingTeamsColor)){
 				for(Position des: p.getMoves(getPositionOfPiece(p), this)){
 					Move move = new Move(getPositionOfPiece(p), des);
 					boolean firstMove = p.getFirstMove();
 					Piece savedPiece = BOARD[move.getDestination().getRow()][move.getDestination().getCol()];
 					makeMove(move);
-					boolean check = isInCheck(otherColor(color));						
+					boolean check = isInCheck(movingTeamsColor);						
 					unMakeMove(move, savedPiece, firstMove);
 						
 						if(!check){
@@ -248,7 +250,7 @@ public class Board {
 		ArrayList<Piece>boardPieces = new ArrayList<Piece>();
 		
 		for(Position p: positionsOnTheBoard()){
-			if(hasPiece(p)){
+			if(isPieceAtPosition(p)){
 				boardPieces.add(getPiece(p));
 			}	
 			
@@ -256,17 +258,7 @@ public class Board {
 		return boardPieces;
 	}
 	
-//	public Position kingPosition(){
-//		Position kingPos = null;
-//		for(Position p: positionsOnTheBoard()){
-//			if(hasPiece(p) && getPiece(p) instanceof King){
-//				return kingPos = p;
-//			}
-//		}
-//		
-//		return kingPos;
-//	}
-	
+
 	public String otherColor(String color){
 		if(color.equals("light")){
 			color = "dark";
@@ -281,7 +273,7 @@ public class Board {
 
 	public boolean isEmptyOrHasColor(Position targetPos, String otherColor) {
 		
-		return hasPiece(targetPos) && getPiece(targetPos).getPieceColor().equals(otherColor) || !hasPiece(targetPos);
+		return isPieceAtPosition(targetPos) && getPiece(targetPos).getPieceColor().equals(otherColor) || !isPieceAtPosition(targetPos);
 	}
 
 

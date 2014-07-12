@@ -17,16 +17,27 @@ public class Pawn extends Piece{
 		if (this.getPieceColorCode().equals("l")) direction = -1;
 
 		if(firstMove){
-			addAvailablePosition(thePosition.getRow() + (direction * 2),thePosition.getCol(), theBoard, validMoves, false);
+			addAvailablePositionForPawn(thePosition.getRow() + (direction * 2),thePosition.getCol(), theBoard, validMoves, false);
 		}
-		addAvailablePosition(thePosition.getRow() + (direction * 1),thePosition.getCol(), theBoard, validMoves, false);
-		addAvailablePosition(thePosition.getRow() + (direction * 1),thePosition.getCol() + 1, theBoard, validMoves, true);
-		addAvailablePosition(thePosition.getRow() + (direction * 1),thePosition.getCol() - 1, theBoard, validMoves, true);
+		addAvailablePositionForPawn(thePosition.getRow() + (direction * 1),thePosition.getCol(), theBoard, validMoves, false);
+		addAvailablePositionForPawn(thePosition.getRow() + (direction * 1),thePosition.getCol() + 1, theBoard, validMoves, true);
+		addAvailablePositionForPawn(thePosition.getRow() + (direction * 1),thePosition.getCol() - 1, theBoard, validMoves, true);
 		
 		return validMoves;
 	}
 
-	
+	public void addAvailablePositionForPawn(int row, int col, Board theBoard,ArrayList<Position> validMoves, boolean mustCapture) {
+		Position newPosition = new Position(row, col);
+		
+		if(newPosition.isOnBoard() &&
+				((mustCapture && theBoard.isPieceAtPosition(newPosition) && !theBoard.getPiece(newPosition).hasSameColor(this)) ||
+						(!mustCapture && !theBoard.isPieceAtPosition(newPosition)))){
+
+			validMoves.add(newPosition);
+
+		}		
+
+	}
 	
 
 

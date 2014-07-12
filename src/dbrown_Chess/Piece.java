@@ -3,8 +3,8 @@ package dbrown_Chess;
 import java.util.ArrayList;
 
 public abstract class Piece {
-	
-	
+
+
 	private String pieceType;
 	protected String pieceColor;
 	protected String pieceTypeCode;
@@ -12,86 +12,86 @@ public abstract class Piece {
 	protected final int ROW_LENGTH = 8;
 	protected final int COL_LENGTH = 8;
 	protected final int SIZE = 8;
-	
 
 
-public Piece(String pieceType, String pieceColor, String pieceTypeCode, String pieceColorCode) {
+
+	public Piece(String pieceType, String pieceColor, String pieceTypeCode, String pieceColorCode) {
 		this.pieceType = pieceType; //this.getClass().getSimpleName();
 		this.pieceColor = pieceColor; //pieceColorCode.equals("l")?"light":"dark";
 		this.pieceTypeCode = pieceTypeCode;
 		this.pieceColorCode = pieceColorCode;
 	}
-public Piece(String pieceTypeCode, String pieceColorCode){
-	this.pieceTypeCode = pieceTypeCode;
-	this.pieceColorCode = pieceColorCode;
-}
-
-public boolean isValidMove(Move theMove, Board theBoard){
-	ArrayList<Position> listOfMoves = getMoves(theMove.getSource(), theBoard);
-	for( Position p: listOfMoves ){
-		if(p.equals(theMove.getDestination())){ //remember to account for moving into checkmate.
-			return true;
-		}
+	public Piece(String pieceTypeCode, String pieceColorCode){
+		this.pieceTypeCode = pieceTypeCode;
+		this.pieceColorCode = pieceColorCode;
 	}
-	System.out.println("Invalid Move");
-	return false;
-	
-}
 
-public abstract ArrayList<Position> getMoves(Position thePosition, Board theBoard); 
-
-public void addAvailablePosition(int row, int col, Board theBoard,ArrayList<Position> validMoves, boolean isCapturable) {
-	
-	Position newPosition = new Position(row, col);
-	addAvailablePosition(newPosition, theBoard, validMoves, isCapturable);
-}
-
-public void addAvailablePosition(Position newPosition, Board theBoard,ArrayList<Position> validMoves, boolean isCapturable) {
-
-	if(newPosition.isOnBoard()){
-		if(theBoard.hasPiece(newPosition)){
-			if(theBoard.getPiece(newPosition).getPieceColorCode()!= this.getPieceColorCode()&&isCapturable){
-				validMoves.add(newPosition);
+	public boolean isValidMove(Move theMove, Board theBoard){
+		ArrayList<Position> listOfMoves = getMoves(theMove.getSource(), theBoard);
+		for( Position p: listOfMoves ){
+			if(p.equals(theMove.getDestination())){ //remember to account for moving into checkmate.
+				return true;
 			}
-		}		
-		else {
-			validMoves.add(newPosition);
 		}
-		
+		System.out.println("Invalid Move");
+		return false;
+
 	}
-}
 
-protected boolean firstMove = true;
+	public abstract ArrayList<Position> getMoves(Position thePosition, Board theBoard); 
 
+	public void addAvailablePosition(int row, int col, Board theBoard,ArrayList<Position> validMoves) {
 
-public void setMoved(){
-	firstMove = false;
-}
+		Position newPosition = new Position(row, col);
+		addAvailablePosition(newPosition, theBoard, validMoves);
+	}
 
-public void setFirstMove(boolean moved){
-	firstMove = moved;
-}
+	public void addAvailablePosition(Position newPosition, Board theBoard,ArrayList<Position> validMoves) {
 
-public boolean getFirstMove(){
-	return firstMove;
-}
+		if(newPosition.isOnBoard() && theBoard.isEmptyOrHasColor(newPosition, theBoard.otherColor(this.pieceColor))){
+			
+			validMoves.add(newPosition);
 
-public String getPieceColor() {
-	return pieceColor;
-}
+		}		
 
-public String getPieceType() {
-	return pieceType;
-}
-
-public String getPieceColorCode() {
-	return pieceColorCode;
-}
+	}
 
 
-public String getPieceTypeCode() {
-	return pieceTypeCode;
-}
+	public boolean hasSameColor(Piece piece){
+		return this.pieceColorCode.equals(piece.pieceColorCode);
+	}
+
+	protected boolean firstMove = true;
+
+
+	public void setMoved(){
+		firstMove = false;
+	}
+
+	public void setFirstMove(boolean moved){
+		firstMove = moved;
+	}
+
+	public boolean getFirstMove(){
+		return firstMove;
+	}
+
+	public String getPieceColor() {
+		return pieceColor;
+	}
+
+	public String getPieceType() {
+		return pieceType;
+	}
+
+	public String getPieceColorCode() {
+		return pieceColorCode;
+	}
+
+
+	public String getPieceTypeCode() {
+		return pieceTypeCode;
+	}
 
 
 }

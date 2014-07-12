@@ -20,67 +20,58 @@ public class Rook extends Piece{
 		for(int i = 1; !foundPiece && (i <= SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow()+i, thePosition.getCol());
 
-			if(targetPos.isOnBoard() && !thePosition.equals(targetPos)){
+			if(targetPos.isOnBoard()){
+				addAvailablePosition(targetPos, theBoard, validMoves);
 				
-				if(theBoard.hasPiece(targetPos))
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
 				{
-					if(!theBoard.getPiece(targetPos).getPieceColor().equals(pieceColor)){
-						addAvailablePosition(thePosition.getRow()+i, thePosition.getCol(), theBoard, validMoves, true);
-					}
-					break;
+						break;
+					
 				}
-				addAvailablePosition(thePosition.getRow()+i, thePosition.getCol(), theBoard, validMoves, true);
+
 			}
 		}
 
 		for(int i = 1; !foundPiece && (i <= SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow()-i, thePosition.getCol());
-			if(targetPos.isOnBoard() && !thePosition.equals(targetPos)){
+			if(targetPos.isOnBoard()){
+				addAvailablePosition(targetPos, theBoard, validMoves);
 				
-				if(theBoard.hasPiece(targetPos))
-				{			
-					if(!theBoard.getPiece(targetPos).getPieceColor().equals(pieceColor))
-					{
-						addAvailablePosition(thePosition.getRow()-i, thePosition.getCol(), theBoard, validMoves, true);
-					}
-					break;
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
+				{
+						break;
+					
 				}
-				addAvailablePosition(thePosition.getRow()-i, thePosition.getCol(), theBoard, validMoves, true);
+
 			}
 		}
 
 		//available column movements
 		for(int i = 1; !foundPiece && (i <= SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow(), thePosition.getCol()-i);
-			if(targetPos.isOnBoard() && !thePosition.equals(targetPos)){
+			if(targetPos.isOnBoard()){
+				addAvailablePosition(targetPos, theBoard, validMoves);
 				
-
-				if(theBoard.hasPiece(targetPos))
-				{			
-					if(!theBoard.getPiece(targetPos).getPieceColor().equals(pieceColor))
-					{
-						addAvailablePosition(thePosition.getRow(), thePosition.getCol()-i, theBoard, validMoves, true);
-					}
-					break;
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
+				{
+						break;
+					
 				}
-				addAvailablePosition(thePosition.getRow(), thePosition.getCol()-i, theBoard, validMoves, true);
+
 			}
 		}
 
 		for(int i = 1; !foundPiece && (i <= SIZE); i++){
 			Position targetPos = new Position(thePosition.getRow(), thePosition.getCol()+i);
-			if(targetPos.isOnBoard() && !thePosition.equals(targetPos)){
+			if(targetPos.isOnBoard()){
+				addAvailablePosition(targetPos, theBoard, validMoves);
 				
-
-				if(theBoard.hasPiece(targetPos))
-				{			
-					if(!theBoard.getPiece(targetPos).getPieceColor().equals(pieceColor))
-					{
-						addAvailablePosition(thePosition.getRow(), thePosition.getCol()+i, theBoard, validMoves, true);
-					}
-					break;
+				if(theBoard.isPieceAtPosition(targetPos) && !thePosition.equals(targetPos))
+				{
+						break;
+					
 				}
-				addAvailablePosition(thePosition.getRow(), thePosition.getCol()+i, theBoard, validMoves, true);
+
 			}
 		}	
 
