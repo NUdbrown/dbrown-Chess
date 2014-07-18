@@ -130,7 +130,9 @@ public class Board {
 			if (pieceToMove.getPieceColor().equals("light")) {
 				makeMove(theMove);
 				isLightTurn = false;
-				canCaptureKing(pieceToMove);
+				if(isInCheck(otherColor(pieceToMove.getPieceColor()))){
+					System.out.println(otherColor(pieceToMove.getPieceColor()).toUpperCase() + " King is in Check by " + pieceToMove.getPieceColor() + " " + pieceToMove.getPieceType());
+				}
 				
 
 			} else {
@@ -142,8 +144,11 @@ public class Board {
 		else {
 			if (pieceToMove.getPieceColor().equals("dark")) {
 				makeMove(theMove);
-				isLightTurn = true; 
-				canCaptureKing(pieceToMove);
+				isLightTurn = true;
+				if(isInCheck(otherColor(pieceToMove.getPieceColor()))){
+					System.out.println(otherColor(pieceToMove.getPieceColor()).toUpperCase() + " King is in Check by " + pieceToMove.getPieceColor() + " " + pieceToMove.getPieceType());
+				}
+						
 					
 				
 				
@@ -179,14 +184,13 @@ public class Board {
 				Piece endPiece = getPiece(position);
 				if(endPiece instanceof King && !endPiece.getPieceColor().equals(thePiece.getPieceColor())){
 					canCaptureKing = true;
-					System.out.println(thePiece.getPieceColor().toUpperCase()+" "+thePiece.getPieceType()+" can attack "+ endPiece.getPieceColor().toUpperCase() +" King!");
-					System.out.println("Is in check!");
+//					System.out.println(thePiece.getPieceColor().toUpperCase()+" "+thePiece.getPieceType()+" can attack "+ endPiece.getPieceColor().toUpperCase() +" King!");
 				}
 				 
 					
 			}
 			
-		}		
+		}	
 		
 		return canCaptureKing;
 	}
