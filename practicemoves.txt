@@ -1,5 +1,10 @@
-e2e4
-f7f5
-e4 f5*
-g7g5
-d1h5
+d2d4
+e7e5
+a2a4
+e5 d4*
+b2b4
+e8e7
+d1d3
+f7f6
+d3e4
+e7f7

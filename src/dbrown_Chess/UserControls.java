@@ -1,7 +1,6 @@
 package dbrown_Chess;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -33,11 +32,10 @@ public class UserControls {
 					if(command.getTypeCommand().equals(CommandType.PLACEMENT)){
 						placePiece(command);
 					}
-					
-			
-			} while (buff.ready());
-		} catch (FileNotFoundException e) {
 
+
+			} while (buff.ready());
+		} catch (Exception e) {
 			System.out.println("File not found or doesn't exist!");
 			e.printStackTrace();
 		} finally {
@@ -55,23 +53,22 @@ public class UserControls {
 					}
 					else if(command.getTypeCommand().equals(CommandType.CAPTURE)){
 						capturing(command);
-						
+
 					}
-					
-					
+
+
 			} while (!theBoard.isInCheckmate(theBoard.currentTurnColor()) && buff2.ready());
 			theBoard.print();
-	} catch (FileNotFoundException e) {
+	} catch (Exception e) {
 		System.out.println("File not found or doesn't exist!");
 		e.printStackTrace();
 	} finally {
 		buff2.close();
 	}
-			
+
 
 		
 	}
-	
 	private void placePiece(Command command){
 		Piece piece = null;
 		String pieceType = command.getPiece();

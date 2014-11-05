@@ -22,13 +22,13 @@ public class CommandParser {
 
 	public Pattern capturePattern() {
 		Pattern capturePattern = Pattern
-				.compile("^(?<move1>[A-Ha-h][1-8][ ])(?<move2>[A-Ha-h][1-8])(?<capture>\\*)$");
+				.compile("^(?<move1>[A-Ha-h][1-8]) (?<move2>[A-Ha-h][1-8])(?<capture>\\*)$");
 		return capturePattern;
 	}
 
 	public Pattern doubleMovePattern() {
 		Pattern doubleMovePattern = Pattern
-				.compile("^(?<move1>[A-Ha-h][1-8][ ])(?<move2>[A-h][1-8][ ])(?<move3>[A-Ha-h][1-8][ ])(?<move4>[A-Ha-h][1-8])$");
+				.compile("^(?<move1>[A-Ha-h][1-8]) (?<move2>[A-h][1-8]) (?<move3>[A-Ha-h][1-8]) (?<move4>[A-Ha-h][1-8])$");
 		return doubleMovePattern;
 	}
 
@@ -68,16 +68,16 @@ public class CommandParser {
 			if (captureMatch.group("capture").contains("*")) {
 				astrik = "captures the piece on ";
 			}
-			System.out.println("Moves piece on "+ captureMatch.group("move1") + "to "+ captureMatch.group("move2") + " and " + astrik+ "" + captureMatch.group("move2"));
+			System.out.println("Moves piece on "+ captureMatch.group("move1") + " to "+ captureMatch.group("move2") + " and " + astrik+ "" + captureMatch.group("move2"));
 			return new Command(captureMatch.group("move1"), captureMatch.group("move2"),CommandType.CAPTURE);
 		} 
 		//else if (doubleMatch.find())
 		// {
 		// System.out.println("Moves piece on "
-		// + doubleMatch.group("move1") + "to "
+		// + doubleMatch.group("move1") + " to "
 		// + doubleMatch.group("move2")
 		// + "and moves piece on "
-		// + doubleMatch.group("move3") + "to "
+		// + doubleMatch.group("move3") + " to "
 		// + doubleMatch.group("move4"));
 		//
 		// }
