@@ -117,13 +117,8 @@ public class Board {
 
     public void turnTaking(Move theMove) {
         Piece pieceToMove = getPiece(theMove.getSource());
-
-        completeTurn(theMove, pieceToMove);
-
-    }
-
-    public void completeTurn(Move theMove, Piece pieceToMove) {
         String color = isLightTurn ? "light" : "dark";
+
         if (pieceToMove.getPieceColor().equals(color)) {
             makeMove(theMove);
             if (pieceToMove.isValid) {
@@ -135,7 +130,9 @@ public class Board {
         } else {
             System.out.println("It is not your turn!");
         }
+
     }
+
 
     public boolean isInCheck(String kingsColor) {
         boolean check = false;
