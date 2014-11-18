@@ -11,117 +11,122 @@ import dbrown_Chess.Command.CommandType;
 
 public class UserControls {
 
-	BufferedReader buff;
-	BufferedReader buff2;
-	Board theBoard = new Board();
-	Piece piece;
+    BufferedReader buff;
+    BufferedReader buff2;
+    Board theBoard = new Board();
+    Piece piece;
 
-	public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-		(new UserControls()).readCommandsFromFile(Paths.get(args[0]), Paths.get(args[1]));
+        (new UserControls()).readCommandsFromFile(Paths.get(args[0]), Paths.get(args[1]));
 
-	}
+    }
 
-	public void readCommandsFromFile(Path filePath, Path moveFilePath) throws IOException {
-		try {
-			CommandParser parser = new CommandParser();
-			buff = Files.newBufferedReader(filePath, Charset.defaultCharset());
-			do {
-				String line = buff.readLine();
-					Command command = parser.parseCommand(line);
-					if(command.getTypeCommand().equals(CommandType.PLACEMENT)){
-						placePiece(command);
-					}
-
-
-			} while (buff.ready());
-		} catch (Exception e) {
-			System.out.println("File not found or doesn't exist!");
-			e.printStackTrace();
-		} finally {
-			buff.close();
-		}	
-		
-		try{
-			CommandParser parser = new CommandParser();
-			buff2 = Files.newBufferedReader(moveFilePath, Charset.defaultCharset());
-			do {
-				String line = buff2.readLine();
-					Command command = parser.parseCommand(line);
-					 if(command.getTypeCommand().equals(CommandType.MOVE)){
-						makeMove(command);
-					}
-					else if(command.getTypeCommand().equals(CommandType.CAPTURE)){
-						capturing(command);
-
-					}
+    public void readCommandsFromFile(Path filePath, Path moveFilePath) throws IOException {
+        try {
+            CommandParser parser = new CommandParser();
+            buff = Files.newBufferedReader(filePath, Charset.defaultCharset());
+            do {
+                String line = buff.readLine();
+                Command command = parser.parseCommand(line);
+                if (command.getTypeCommand().equals(CommandType.PLACEMENT)) {
+                    placePiece(command);
+                }
 
 
-			} while (!theBoard.isInCheckmate(theBoard.currentTurnColor()) && buff2.ready());
-			theBoard.print();
-	} catch (Exception e) {
-		System.out.println("File not found or doesn't exist!");
-		e.printStackTrace();
-	} finally {
-		buff2.close();
-	}
+            } while (buff.ready());
+        } catch (Exception e) {
+            System.out.println("File not found or doesn't exist!");
+            e.printStackTrace();
+        } finally {
+            buff.close();
+        }
+
+        try {
+            CommandParser parser = new CommandParser();
+            buff2 = Files.newBufferedReader(moveFilePath, Charset.defaultCharset());
+            do {
+                String line = buff2.readLine();
+                Command command = parser.parseCommand(line);
+                if (command.getTypeCommand().equals(CommandType.MOVE)) {
+                    makeMove(command);
+                } else if (command.getTypeCommand().equals(CommandType.CAPTURE)) {
+                    capturing(command);
+
+                }
+//                    else if(command.getTypeCommand().equals(CommandType.DOUBLE_MOVE)){
+//                         doubleMovement(command);
+//                     }
 
 
-		
-	}
-	private void placePiece(Command command){
-		Piece piece = null;
-		String pieceType = command.getPiece();
-		String pieceColor = command.getPossiblePieceColor();
-		String pieceCode = command.getPossiblePieceCode();
-		String colorCode = command.getPossibleColorCode();
-	
+            } while (!theBoard.isInCheckmate(theBoard.currentTurnColor()) && buff2.ready());
 
-			if(pieceType.equals("Pawn")) {
-				piece = new Pawn(pieceType, pieceColor, pieceCode,colorCode );
-				
-			}
-			else if(pieceType.equals("King")) {
-				piece = new King(pieceType, pieceColor, pieceCode,colorCode);
-			}
-			else if(pieceType.equals("Queen")) {
-				piece = new Queen(pieceType, pieceColor,pieceCode,colorCode);
-			}
-			else if(pieceType.equals("Rook")) {
-				piece = new Rook(pieceType, pieceColor, pieceCode,colorCode);
-			}
-			else if(pieceType.equals("Knight")) {
-				piece = new Knight(pieceType, pieceColor, pieceCode,colorCode);
-			}
-			else if(pieceType.equals("Bishop")) {
-				piece = new Bishop(pieceType, pieceColor, pieceCode,colorCode);
-			}
-			theBoard.placePiece(command.getDestinRow(), command.getDestinColumn(), piece);
-			
-	}
-	
-	private void makeMove(Command command){
-		Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
-		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
-		Move theMove = new Move(source, destination);
-		theBoard.turnTaking(theMove);
-		theBoard.print();
-		
-		
-	}
-	
-	private void capturing(Command command){
-		Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
-		Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
-		Move theMove = new Move(source, destination);
-		theBoard.turnTaking(theMove);
-		theBoard.print();
-		
-	}
-	
+        } catch (Exception e) {
+            System.out.println("File not found or doesn't exist!");
+            e.printStackTrace();
+        } finally {
+            buff2.close();
+        }
+
+
+    }
+
+    private void placePiece(Command command) {
+        Piece piece = null;
+        String pieceType = command.getPiece();
+        String pieceColor = command.getPossiblePieceColor();
+        String pieceCode = command.getPossiblePieceCode();
+        String colorCode = command.getPossibleColorCode();
+
+
+        if (pieceType.equals("Pawn")) {
+            piece = new Pawn(pieceType, pieceColor, pieceCode, colorCode);
+
+        } else if (pieceType.equals("King")) {
+            piece = new King(pieceType, pieceColor, pieceCode, colorCode);
+        } else if (pieceType.equals("Queen")) {
+            piece = new Queen(pieceType, pieceColor, pieceCode, colorCode);
+        } else if (pieceType.equals("Rook")) {
+            piece = new Rook(pieceType, pieceColor, pieceCode, colorCode);
+        } else if (pieceType.equals("Knight")) {
+            piece = new Knight(pieceType, pieceColor, pieceCode, colorCode);
+        } else if (pieceType.equals("Bishop")) {
+            piece = new Bishop(pieceType, pieceColor, pieceCode, colorCode);
+        }
+        theBoard.placePiece(command.getDestinRow(), command.getDestinColumn(), piece);
+
+    }
+
+    private void makeMove(Command command) {
+        Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
+        Position destination = new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
+        Move theMove = new Move(source, destination);
+        theBoard.turnTaking(theMove);
+        theBoard.print();
+
+
+    }
+
+    private void capturing(Command command) {
+        Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
+        Position destination = new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
+        Move theMove = new Move(source, destination);
+        theBoard.turnTaking(theMove);
+        theBoard.print();
+
+    }
+
 //	private void doubleMovement(Command command){
-//		//get first move then make it.
-//		//get second move then make it.
+//        Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
+//        Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
+//        Position source2 = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
+//        Position destination2= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
+//        Move theMove = new Move(source, destination, source2, destination2);
+//        theBoard.turnTaking(theMove);
+//        theBoard.print();
+//
+////		get first move then make it.
+////		get second move then make it.
 //	}
 
 }
