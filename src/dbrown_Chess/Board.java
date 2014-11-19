@@ -119,20 +119,19 @@ public class Board {
         Piece pieceToMove = getPiece(theMove.getSource());
         String color = isLightTurn ? "light" : "dark";
 
-        if (pieceToMove.getPieceColor().equals(color)) {
+        if (pieceToMove.getPieceColor().equals(color) && pieceToMove != null) {
             makeMove(theMove);
             if (pieceToMove.isValid) {
                 isLightTurn = !isLightTurn;
                 if (isInCheck(otherColor(pieceToMove.getPieceColor()))) {
-                    System.out.println(otherColor(pieceToMove.getPieceColor()).toUpperCase() + " King is in Check by " + pieceToMove.getPieceColor() + " " + pieceToMove.getPieceType());
+                    System.out.println(otherColor(pieceToMove.getPieceColor()).toUpperCase() + " King is in Check");
                 }
             }
         } else {
-            System.out.println("It is not your turn!");
+            System.out.println("It is not your turn or the your trying to move a null position.");
         }
 
     }
-
 
     public boolean isInCheck(String kingsColor) {
         boolean check = false;
@@ -156,7 +155,7 @@ public class Board {
                 Piece endPiece = getPiece(position);
                 if (endPiece instanceof King && !endPiece.getPieceColor().equals(thePiece.getPieceColor())) {
                     canCaptureKing = true;
-//					System.out.println(thePiece.getPieceColor().toUpperCase()+" "+thePiece.getPieceType()+" can attack "+ endPiece.getPieceColor().toUpperCase() +" King!");
+                    System.out.println(thePiece.getPieceColor().toUpperCase() + " " + thePiece.getPieceType() + " can attack " + endPiece.getPieceColor().toUpperCase() + " King!");
                 }
 
 
