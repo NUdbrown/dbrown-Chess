@@ -37,7 +37,17 @@ public class Command {
 	{
 		this(null,null, destinationSquare, currentPieceSquare, null, null, typeCommand);
 	}
-		
+
+	@Override
+	public String toString() {
+		return "Command [currentPieceSquare=" + currentPieceSquare + ", destinationSquare="
+				+ destinationSquare + ", possiblePiece=" + possiblePiece
+				+ ", possiblePieceColor=" + possiblePieceColor
+				+ ", possiblePieceCode=" + possiblePieceCode
+				+ ", possibleColorCode=" + possibleColorCode + ", typeCommand="
+				+ typeCommand + "]";
+	}
+
 	public String getPiece() {
 		return possiblePiece;
 	}
@@ -53,21 +63,12 @@ public class Command {
 		char destincol = destinationSquare.charAt(0);
 		return destincol;
 	}
-	@Override
-	public String toString() {
-		return "Command [currentPieceSquare=" + currentPieceSquare + ", destinationSquare="
-				+ destinationSquare + ", possiblePiece=" + possiblePiece
-				+ ", possiblePieceColor=" + possiblePieceColor
-				+ ", possiblePieceCode=" + possiblePieceCode
-				+ ", possibleColorCode=" + possibleColorCode + ", typeCommand="
-				+ typeCommand + "]";
-	}
 
 	public char getDestinRow(){
 		char destinRow = destinationSquare.charAt(1);
 		return destinRow;
 	}
-	
+
 	public char getSourceColumn(){
 		char sourceCol = currentPieceSquare.charAt(0);
 		return sourceCol;

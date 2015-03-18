@@ -108,11 +108,11 @@ public class Board {
         return getPiece(thePosition) != null;
     }
 
-    public void removePiece(Piece thePiece, Position thePosition) {
-        thePiece = BOARD[thePosition.getRow()][thePosition.getCol()];
-        Piece temp = thePiece;
-        temp = null;
-    }
+//    public void removePiece(Piece thePiece, Position thePosition) {
+//        thePiece = BOARD[thePosition.getRow()][thePosition.getCol()];
+//        Piece temp = thePiece;
+//        temp = null;
+//    }
 
 
     public void turnTaking(Move theMove) {
@@ -155,7 +155,7 @@ public class Board {
                 Piece endPiece = getPiece(position);
                 if (endPiece instanceof King && !endPiece.getPieceColor().equals(thePiece.getPieceColor())) {
                     canCaptureKing = true;
-                    System.out.println(thePiece.getPieceColor().toUpperCase() + " " + thePiece.getPieceType() + " can attack " + endPiece.getPieceColor().toUpperCase() + " King!");
+//                    System.out.println(thePiece.getPieceColor().toUpperCase() + " " + thePiece.getPieceType() + " can attack " + endPiece.getPieceColor().toUpperCase() + " King!");
                 }
 
 
@@ -170,11 +170,6 @@ public class Board {
         String color = isLightTurn ? "light" : "dark";
         return color;
     }
-    // Save the destination piece
-    // make move
-    // see if we are in check
-    // unmake move
-    // if we were not in check return false
 
     public boolean isInCheckmate(String movingTeamsColor) {
 
@@ -192,13 +187,12 @@ public class Board {
                         return false;
                     }
 
-
                 }
 
             }
 
         }
-        System.out.println("CheckMate!");
+        System.out.println("CheckMate! Team " + otherColor(movingTeamsColor).toUpperCase() + " has won the game!");
         return true;
     }
 
@@ -250,5 +244,15 @@ public class Board {
         return isPieceAtPosition(targetPos) && getPiece(targetPos).getPieceColor().equals(otherColor) || !isPieceAtPosition(targetPos);
     }
 
+    public ArrayList<String> printMoves(String color){
+        ArrayList currentMoves = new ArrayList();
+
+        for(Piece p: piecesOnTheBoard()){
+            if(p.getPieceColor().equals(color)){
+                currentMoves.add(p.getMoves(this.getPositionOfPiece(p),this));
+            }
+        }
+        return currentMoves;
+    }
 
 }

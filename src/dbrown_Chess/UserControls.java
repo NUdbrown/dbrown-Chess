@@ -1,13 +1,14 @@
 package dbrown_Chess;
 
+import dbrown_Chess.Command.CommandType;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import dbrown_Chess.Command.CommandType;
+import java.util.Scanner;
 
 public class UserControls {
 
@@ -33,7 +34,6 @@ public class UserControls {
                     placePiece(command);
                 }
 
-
             } while (buff.ready());
         } catch (Exception e) {
             System.out.println("File not found or doesn't exist!");
@@ -48,16 +48,15 @@ public class UserControls {
             do {
                 String line = buff2.readLine();
                 Command command = parser.parseCommand(line);
+
+                System.out.println(theBoard.printMoves(theBoard.currentTurnColor()).toString());
+
                 if (command.getTypeCommand().equals(CommandType.MOVE)) {
                     makeMove(command);
                 } else if (command.getTypeCommand().equals(CommandType.CAPTURE)) {
                     capturing(command);
 
                 }
-//                    else if(command.getTypeCommand().equals(CommandType.DOUBLE_MOVE)){
-//                         doubleMovement(command);
-//                     }
-
 
             } while (!theBoard.isInCheckmate(theBoard.currentTurnColor()) && buff2.ready());
 
@@ -116,17 +115,6 @@ public class UserControls {
 
     }
 
-//	private void doubleMovement(Command command){
-//        Position source = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
-//        Position destination= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
-//        Position source2 = new Position(Board.getRow(command.getSourceRow()), Board.getColumn(command.getSourceColumn()));
-//        Position destination2= new Position(Board.getRow(command.getDestinRow()), Board.getColumn(command.getDestinColumn()));
-//        Move theMove = new Move(source, destination, source2, destination2);
-//        theBoard.turnTaking(theMove);
-//        theBoard.print();
-//
-////		get first move then make it.
-////		get second move then make it.
-//	}
+
 
 }

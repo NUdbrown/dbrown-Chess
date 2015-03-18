@@ -1,10 +1,9 @@
 package dbrown_Chess;
 
-import java.io.ObjectInputStream.GetField;
+import dbrown_Chess.Command.CommandType;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import dbrown_Chess.Command.CommandType;
 
 public class CommandParser {
 
@@ -16,7 +15,7 @@ public class CommandParser {
 
     public Pattern movePattern() {
         Pattern movePattern = Pattern
-                .compile("^(?<moves1>[A-Ha-h][1-8])(?<moves2>[A-Ha-h][1-8])$");
+                .compile("^(?<current>[A-Ha-h][1-8])(?<newPos>[A-Ha-h][1-8])$");
         return movePattern;
     }
 
@@ -26,11 +25,11 @@ public class CommandParser {
         return capturePattern;
     }
 
-    public Pattern doubleMovePattern() {
-        Pattern doubleMovePattern = Pattern
-                .compile("^(?<move1>[A-Ha-h][1-8]) (?<move2>[A-h][1-8]) (?<move3>[A-Ha-h][1-8]) (?<move4>[A-Ha-h][1-8])$");
-        return doubleMovePattern;
-    }
+//    public Pattern doubleMovePattern() {
+//        Pattern doubleMovePattern = Pattern
+//                .compile("^(?<move1>[A-Ha-h][1-8]) (?<move2>[A-h][1-8]) (?<move3>[A-Ha-h][1-8]) (?<move4>[A-Ha-h][1-8])$");
+//        return doubleMovePattern;
+//    }
 
     public Command parseCommand(String move) {
         Matcher placementMatch = placementPattern().matcher(move);
@@ -60,8 +59,8 @@ public class CommandParser {
             return new Command(thePiece, pieceColor.replaceAll("l", "light").replaceAll("d", "dark"), placementMatch.group("placement"), null, pieceSymbol, pieceColor, CommandType.PLACEMENT);
 
         } else if (moveMacth.find()) {
-            System.out.println("Moves piece on " + moveMacth.group("moves1") + " to " + moveMacth.group("moves2"));
-            return new Command(moveMacth.group("moves1"), moveMacth.group("moves2"), CommandType.MOVE);
+            System.out.println("Moves piece on " + moveMacth.group("current") + " to " + moveMacth.group("newPos"));
+            return new Command(moveMacth.group("current"), moveMacth.group("newPos"), CommandType.MOVE);
         } else if (captureMatch.find()) {
             String astrik = null;
             if (captureMatch.group("capture").contains("*")) {
